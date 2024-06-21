@@ -1,0 +1,2621 @@
+#ifdef APPLE
+#else
+#include <GL/glut.h>
+#endif
+#include <stdlib.h>
+#include <iostream>
+#include <cmath>
+#include <stdbool.h>
+
+
+
+GLboolean luzEncendida = GL_TRUE;
+
+GLUquadricObj* cilindro;
+GLUquadricObj* p = gluNewQuadric();
+GLfloat angle = 0.0f;
+GLfloat rotationSpeed = 2.0f;
+GLboolean isForward = GL_TRUE;
+
+
+GLfloat fanAngle = 0.0f; // Renombramos la variable para evitar la redefinición
+bool ventiladorEncendido = false;
+
+
+
+
+float posX = 2.0f, posY = 25.0f, posZ = -160.0f;
+float rotX = 0.0f, rotY = 0.0f;
+bool botones_raton[3] = { false, false, false };
+int ultima_x, ultima_y;
+float velocidadMovimiento = 3.0f;
+float velocidadRotacion = 0.5f;
+float zoom = 0.2f;
+
+float movement = 10.0f; // Declaración de la variable movement y asignación de un valor inicial
+
+
+bool bombillaEncendida = false;
+bool iluminacionAdicional = false;
+
+const GLfloat light_diffuse[] = { 300.0f, 300.0f, 300.0f, 300.0f }; // Intensidad de la luz difusa
+
+const GLfloat light_constant_attenuation = 1.0f;
+const GLfloat light_linear_attenuation = 0.1f;
+const GLfloat light_quadratic_attenuation = 0.05f;
+
+void configurarIluminacionBombilla() {
+    GLfloat light_position[] = { 0.0f, 20.0f, -5.0f, 1.0f }; // Posición de la bombilla
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, light_constant_attenuation);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, light_linear_attenuation);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, light_quadratic_attenuation);
+    
+    //glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient); // Configurar luz ambiental
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse); // Configurar luz difusa
+    //glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glEnable(GL_LIGHT0); 
+}
+
+
+void inicializar() {
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    cilindro = gluNewQuadric();
+    gluQuadricDrawStyle(cilindro, GLU_FILL);
+}
+
+
+
+void encLuz() {
+    if (luzEncendida) {
+        glDisable(GL_LIGHTING);
+        luzEncendida = GL_FALSE;
+    }
+    else {
+        glEnable(GL_LIGHTING);
+        luzEncendida = GL_TRUE;
+    }
+    glutPostRedisplay();
+}
+
+
+void keyboard(unsigned char key, int x, int y) {
+    switch (key) {
+        case 'w':
+            posX += sin(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            posZ -= cos(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            break;
+        case 's':
+            posX -= sin(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            posZ += cos(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            break;
+        case 'a':
+            posX -= cos(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            posZ -= sin(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            break;
+        case 'd':
+            posX += cos(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            posZ += sin(rotY * 3.14159 / 180.0) * velocidadMovimiento;
+            break;
+            case ' ':
+            posY += velocidadMovimiento;
+            break;
+        case 'c':
+            posY -= velocidadMovimiento;
+            break;
+        case 'l':
+            encLuz();  
+            break;
+        case 'b':
+            bombillaEncendida = !bombillaEncendida; // Cambiar el estado de la bombilla al presionar 'B'
+            glutPostRedisplay(); // Actualizar la escena para reflejar el cambio
+            break;
+
+        case 27: // ESC key
+            exit(0);
+            break;
+    }
+    glutPostRedisplay();
+}
+
+
+void Pista() {
+
+	glPushMatrix();
+	glTranslatef(0.0,0.0,0.0);
+	//-----------------Pista------------------------------///
+	glPushMatrix();
+	glScalef(300, 2, 15);
+	glTranslatef(-0.5,0,-10);
+	glBegin(GL_POLYGON);
+	//Color
+	glColor3ub(69, 69, 68);
+	glVertex3f(-3,0,0); // A
+	glVertex3f(4,0,0); // B
+	glVertex3f(4,0,2.61);// C
+	glVertex3f(-3,0,2.61);// H
+	glPopMatrix();
+
+	glEnd();
+	glPopMatrix();
+}
+
+void dibujarSuelo() {
+    glColor3f(0.8, 0.8, 0.8);
+    glBegin(GL_QUADS);
+    glVertex3f(-70.0, 0.0, -50.0); /////COPIADO
+    glVertex3f(-70.0, 0.0, 50.0);
+    glVertex3f(70.0, 0.0, 50.0);
+    glVertex3f(70.0, 0.0, -50.0);
+    glEnd();
+}
+void dibujarTecho() {
+
+    glColor3f(0.3, 0.3, 0.3);
+    glBegin(GL_QUADS);
+    glVertex3f(-70.0, 50.0, -50.0);
+    glVertex3f(-70.0, 50.0, 50.0); ////COPIADO
+    glVertex3f(70.0, 50.0, 50.0);
+    glVertex3f(70.0, 50.0, -50.0);
+    glEnd();
+}
+void DibujarCilindro1() {
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(60, 0, -105); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                 ///COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+void DibujarCilindro2() {
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(-60, 0, -105); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                        //COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+
+void DibujarCilindro3() { //columna 1 interior
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(-130, 0, 170); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                        //COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+
+void DibujarCilindro4() { //columna 2 interior
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(130, 0, 170); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                        //COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+void DibujarSilla() {
+    glPushMatrix(); //espaldar
+    glScaled(4, 5, 0.5);
+    glColor3f(0, 0, 0);  //COPIADO 
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //asiento
+    glTranslatef(0, -5, -3.4);
+    glScaled(4, 0.5, 4);       //COPIADO
+    glColor3f(0, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+}
+void DibujarBaseSillas() {
+    glColor3f(0.5, 0.5, 0.5);
+    glPushMatrix(); //barra horizontal
+    glScaled(20, 0.48, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();                            //COPIADO
+
+    glPushMatrix(); //barra vertical 1
+    glScaled(0.5, 2.5, 0.5);
+    glTranslatef(-39, -1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //barra vertical 2
+    glScaled(0.5, 2.5, 0.5);
+    glTranslatef(39, -1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); // pata 1
+    glScaled(1, 0.5, 3);
+    glTranslatef(-19, -8.9, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); // pata 2
+    glScaled(1, 0.5, 3);
+    glTranslatef(19, -8.9, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+}
+void DibujarComputadora (){
+	
+	glPushMatrix();
+	glColor3f(0, 0, 0); // azul
+
+	glTranslatef(-50, 22.2, 5);
+
+    glPushMatrix(); //computadora
+    glScaled(4, 4, 0.4);
+    glTranslatef(1, 2, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();
+    glScaled( 0.5, 0.5, 1);
+    glTranslatef( 8, 15, -1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();
+    glScaled( 0.5, 4, 0.5);
+    glTranslatef( 8, 1, -3);
+    glutSolidCube(2);
+    glPopMatrix(); 
+	glPushMatrix();
+	glScaled( 2, 0.1, 2);
+    glTranslatef( 2, 1, -0.7);
+    glutSolidCube(2);
+    glPopMatrix();    
+    glPushMatrix();
+    glTranslatef(4.5, 4, 0.8);
+    glColor3f(0, 0, 1); // azul
+    glBegin(GL_QUADS); // Comienza a definir un cuadrado
+    glVertex2f(-4, 7); // x, y
+    glVertex2f(3, 7);
+    glVertex2f(3, 1);
+    glVertex2f(-4, 1);
+    glEnd(); // Finaliza la definición del cuadrado
+    glPopMatrix();
+    glPopMatrix();
+}
+
+void DibujarTelevisor(){
+	
+	glPushMatrix();
+	glTranslatef(30, 35, -44);
+	glPushMatrix(); //TV
+    glScaled(11, 7, 0.3);
+    glColor3f(0, 0, 0);
+    glTranslatef(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();
+    glScaled( 0.5, 0.5, 2);
+    glTranslatef( 23, 15, -1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(3.5, 3.4, 0.6);
+    glColor3f(1, 1, 0); // amarillo
+    glBegin(GL_QUADS); // Comienza a definir un cuadrado
+    glVertex2f(-3, 10); // x, y
+    glVertex2f(18, 10);
+    glVertex2f(18, -3);
+    glVertex2f(-3, -3);
+    glEnd(); // Finaliza la definición del cuadrado
+    glPopMatrix();
+    glPopMatrix();
+}
+
+void DibujarRueda(GLfloat x, GLfloat y, GLfloat z) {
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0); // Color  para las ruedas
+    glTranslatef(x, y, z); // Posición de la rueda
+    glRotatef(90, 0, 1, 0); //                                   COPIADO
+    GLUquadricObj* rueda = gluNewQuadric();
+    gluCylinder(rueda, 1, 1, 0.5, 10, 10); // Dibujar rueda
+    glPopMatrix();
+}
+
+
+void DibujarRuedaAmbulancia(GLfloat x, GLfloat y, GLfloat z) {                  //COPIADO
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 0.0); // Color  para las ruedas
+    glTranslatef(x, y, z); // Posición de la rueda
+    glRotatef(90, 0, 1, 0); //  
+    GLUquadricObj* rueda = gluNewQuadric();
+    gluCylinder(rueda,4, 1, 0.5, 10, 10); // Dibujar rueda
+    glPopMatrix();
+}
+
+
+void DibujarAmbulancia() {
+    // Cuerpo de la ambulancia
+    glPushMatrix();
+    glColor3f(1.0, 0.9, 0.75); // Color blanco
+    glTranslatef(-100, 13, -20); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 60); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+     // Cuerpo superior de la ambulancia
+    glPushMatrix();                                            //COPIADO
+    glColor3f(1.0, 0.9, 0.75); // Color blanco
+    glTranslatef(-100, 20, -25); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 50); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+     glPushMatrix();
+    glColor3f(1.0, 0.9, 0.75); // Color blanco
+    glTranslatef(-100, 10.5, -22); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 50); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+    
+    
+    //ruedas de la ambulancia
+    
+    DibujarRuedaAmbulancia(-115.5, 5, -42); // Rueda 1 derecha izquierda, arriba abajo, de la ambulancia
+      DibujarRuedaAmbulancia(-115.5, 5, -6); 
+    DibujarRuedaAmbulancia(-85, 5, -6);                             //COPIADO 
+    DibujarRuedaAmbulancia(-85, 5, -42); 
+    
+    
+    
+    // Ventana delantera de la ambulancia azul
+    glPushMatrix();
+    glColor3f(0.0, 0.5, 1.0); // Color azul
+    glTranslatef(-100, 19, 0.4); // Posición de la ventana (elevada y hacia atrás)
+    glScalef(27, 16, 1); // Tamaño de la ventana (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana delantera
+    
+    // Ventanas laterales de la ambulancia azul
+    glPushMatrix();
+    glColor3f(0.0, 0.5, 1.0); // Color azul
+    glTranslatef(-115, 15, -30); // Posición de la ventana (elevada y hacia la izquierda)
+    glScalef(0.2, 8, 40); // Tamaño de la ventana (ancho, alto, profundidad)                                 
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana lateral izquierda azul
+    
+    glPushMatrix();
+    glColor3f(0.0, 0.5, 1.0); // Color azul
+    glTranslatef(-85, 20, -30); // Posición de la ventana (elevada y hacia la derecha)
+    glScalef(0.2, 8, 40); // Tamaño de la ventana (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana lateral derecha azul
+    
+    // Luces de la ambulancia
+    glPushMatrix();
+    glColor3f(1.0, 1.0, 0.0); // Color amarillo
+    glTranslatef(-111, 15, 9); // Posición de la luz izquierda (elevada y hacia la izquierda)
+    glutSolidSphere(2, 20, 20); // Dibujar la luz izquierda
+    glTranslatef(22, 0, 0); // Posición de la luz derecha (hacia la derecha)
+    glutSolidSphere(2, 20, 20); // Dibujar la luz derecha                                        //COPIADO
+    glPopMatrix(); // Fin de las luces
+}
+
+void car() {
+	
+	glPushMatrix(); 
+	glTranslatef(50, 1.5, -135);
+	glRotatef(-90, 0, 1, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(0.956, 0.592, 0.203);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(0.964, 0.639, 0.298);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(1.0, 1.0, 1.0);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(0.956, 0.541, 0.101);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.317, 0.309, 0.301);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.913, 0.494, 0.047);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(0.960, 0.6, 0.219);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.317, 0.309, 0.301);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.317, 0.309, 0.301);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.317, 0.309, 0.301);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.317, 0.309, 0.301);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(0.956, 0.560, 0.145);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(0.964, 0.6, 0.215);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.964, 0.631, 0.274);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(1.0, 0.0, 0.0);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+
+
+    glPopMatrix();
+}
+
+void Terreno (){
+	
+	glTranslatef (0, 0, 0);
+	glColor3f(0.58, 0.518, 0.424);
+	glBegin(GL_QUADS);
+    glVertex3f(-1000.0, -0.8, -1000.0); /////COPIADO
+    glVertex3f(-1000.0, -0.8, 1000.0);
+    glVertex3f(1000.0, -0.8, 1000.0);
+    glVertex3f(1000.0, -0.8, -1000.0);
+    glEnd();
+}
+
+
+void Floor (){
+	
+	glPushMatrix();  //pared frontal 1er piso grande
+    glTranslatef(1, 25, 51);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared trasera 1er piso grande
+    glTranslatef(1, 25, 300);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();  //pared lateral izquierdo 1er piso grande
+    glTranslatef(250, 25, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();  //pared lateral derecho 1er piso grande
+    glTranslatef(-250, 25, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();  //techo 1er piso grande
+    glTranslatef(1, 49, 175);
+    glScaled(250, 1, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+}
+
+void DibujarVentana(){
+	
+	glTranslatef(1, 10, 1.5); //Vidrio
+	glColor3f(0.8157, 0.9882, 0.9882); 
+	glBegin(GL_QUADS);
+	glVertex2f(1, 27); 
+	glVertex2f(45, 27); 
+	glVertex2f(45, 1);
+	glVertex2f(1, 1); 
+	glEnd();
+	
+	glPushMatrix(); //Marco
+	glTranslatef(23, 1, -0.8);
+	glScaled(24, 1, 1);
+	glColor3f(1, 1, 1);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(23, 27, -0.8);
+	glScaled(24, 1, 1);
+	glColor3f(1, 1, 1);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(46, 14, -0.8);
+	glScaled(1, 14, 1);
+	glColor3f(1, 1, 1);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(23, 14, -0.8);
+	glScaled(1, 14, 1);
+	glColor3f(1, 1, 1);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0, 14, -0.8);
+	glScaled(1, 14, 1);
+	glColor3f(1, 1, 1);
+	glutSolidCube(2);
+	glPopMatrix();
+	
+}
+
+void DibujarBombilla() {
+	
+	
+	
+    glPushMatrix();
+    glTranslatef(0, 48, 0); // Mover la esfera al techo
+    glColor3f(1.0f, 1.0f, 0.8f); // Color de la bombilla
+    
+    if (bombillaEncendida) {
+        glColor3f(0.2f, 0.2f, 0.2f); // Color de la bombilla encendida 
+    } else {
+        glColor3f(1.0f, 1.0f, 0.8f); // Color de la bombilla apagada
+    }
+    
+    glutSolidSphere(1, 20, 20); // Radio 0.5, 20 slices, 20 stacks
+    glPopMatrix();
+
+    // Dibujar el soporte (cono)
+    glPushMatrix();
+    glTranslatef(0, 49.5, 0); // Mover el cono al techo
+    glRotatef(90, 1.0f, 0.0f, 0.0f); // Rotar el cono para que apunte hacia abajo
+    glColor3f(0.7f, 0.7f, 0.7f); // Color del soporte
+    glutSolidCone(0.5, 2.0, 20, 20); // Base 0.2, altura 1.0, 20 slices, 20 stacks
+    glPopMatrix();
+    
+}
+
+void update(int value) {
+    if (ventiladorEncendido) {
+        fanAngle += 5.0f;
+        if (fanAngle > 360.0f) {
+            fanAngle -= 360.0f;
+        }
+        glutPostRedisplay();
+    }
+    glutTimerFunc(16, update, 0); // Llamar a update nuevamente después de 16 ms
+}
+void menuHandler(int option) {
+    switch (option) {
+        case 1:
+            glClearColor(1.0, 1.0, 1.0, 1.0); // Fondo blanco
+            break;
+        case 2:
+            glClearColor(0.0, 0.0, 0.0, 1.0); // Fondo negro
+            break;
+        case 3:
+            glClearColor(0.9, 0.7, 0.5, 1.0); // Fondo azul
+            break;
+        case 4:
+            glClearColor(0.5, 0.5, 0.5, 1.0); // Fondo azul
+            break;
+        case 5:
+            ventiladorEncendido = !ventiladorEncendido; // Alternar el estado del ventilador
+            if (ventiladorEncendido) {
+                glutTimerFunc(0, update, 0); // Iniciar el movimiento si está encendido
+            }
+            break;
+        case 6:
+        	bombillaEncendida = !bombillaEncendida;
+            break;
+        case 7:
+            exit(0); // Salir del programa
+    }
+    glutPostRedisplay(); // Vuelve a dibujar la escena con el nuevo fondo
+}
+
+void drawFan() {
+    glPushMatrix();
+    glRotatef(fanAngle, 0.0f, 0.0f, 1.0f); // Rotar el ventilador en el eje Z
+
+    // Aspas del ventilador
+    glColor3f(0.8f, 0.8f, 0.8f); // Color gris claro
+    for (int i = 0; i < 4; ++i) {
+        glPushMatrix();
+        glRotatef(i * 90.0f, 0.0f, 0.0f, 1.0f); // Rotar cada aspa en 90 grados
+        glTranslatef(0.0f, 0.0f, 0.5f);
+        glScalef(8, 0.5, 0.5);
+        glutSolidCube(1.0); // Cada aspa es un cubo
+        glPopMatrix();
+    }
+
+    // Base del ventilador
+    glColor3f(0.5f, 0.5f, 0.5f); // Color gris medio
+    glTranslatef(0.0f, 0.0f, -0.5f);
+    GLUquadricObj *base = gluNewQuadric(); // Creamos un objeto quadric para la base del ventilador
+    gluCylinder(base, 0.2, 0.2, 0.3, 20, 20); // Base cilíndrica del ventilador
+    gluDeleteQuadric(base); // Liberamos el objeto quadric
+
+    glPopMatrix();
+    
+    
+    //cajuela del ventilador
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, -5, 1);
+    glScalef(5.5, 0.5, 2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(5, 0.5, 1);
+    glScalef(0.5, 5, 2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, 5, 1);
+    glScalef(5, 0.5, 2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(-5, 0.5, 1);
+    glScalef(0.5, 5, 2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    //rejillas
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, -3, 0);
+    glScalef(5, 0.3, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, -1, 0);
+    glScalef(5, 0.3, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, 1, 0);
+    glScalef(5, 0.3, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(1, 1, 1);
+    glTranslatef(0, 3, 0);
+    glScalef(5, 0.3, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+}
+
+
+// MONZON ROJAS JEFFREY (parte 4)
+
+void dibujarPalmera(){
+	
+	//tallo
+	glPushMatrix();
+    glColor3f(0.82, 0.41, 0.12);
+    glTranslatef(450, -44, 0); 
+    glRotatef(-90, 1, 0, 0);                       
+    gluCylinder(cilindro, 8, 2, 300, 20, 20); 
+    glPopMatrix();
+	
+    //	hojas de palmera
+    glPushMatrix();
+    glTranslatef(450, 255, 0); 
+    glColor3f(0.0, 0.5, 0.0); 
+    
+    for (int i = 0; i < 5; ++i) { 
+        glPushMatrix();
+        glRotatef(i * 72, 0, 1, 0); 
+        
+        glBegin(GL_TRIANGLES);
+            glVertex3f(0, 0, 0);
+            glVertex3f(85, 0, 0); 
+            glVertex3f(0, 20, 0);
+        glEnd();
+        
+        glPopMatrix();
+    }
+    for (int i = 0; i < 5; ++i) { 
+        glPushMatrix();
+        glRotatef(i * 54, 0, 1, 0); 
+        
+        glBegin(GL_TRIANGLES);
+            glVertex3f(0, 0, 0);
+            glVertex3f(85, 0, 0); 
+            glVertex3f(0, 40, 0);
+        glEnd();
+        
+        glPopMatrix();
+    }
+
+    glPopMatrix();
+}
+
+
+
+
+void mostrar() {
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    glTranslatef(0, 0, -zoom);
+    glRotatef(rotX, 1.0, 0.0, 0.0);
+    glRotatef(rotY, 0.0, 1.0, 0.0);
+    glTranslatef(-posX, -posY, -posZ);
+ 
+    Terreno();
+    car();
+    dibujarSuelo();
+    dibujarTecho();
+    DibujarCilindro1();
+    DibujarCilindro2();
+    DibujarCilindro3();
+    DibujarCilindro4();
+    DibujarComputadora();
+    DibujarTelevisor();
+    DibujarAmbulancia();
+    Pista();
+    Floor();
+    DibujarBombilla();
+    
+    
+    
+    //drawSquare(0.5, 0.5, 0.5); // Dibuja un cuadrado gris por defecto
+
+     //PARED 1
+    glPushMatrix(); glScaled(1, 25, 50); glTranslatef(-70, 1, 0); glColor3f(0, 0.5, 1); glutSolidCube(2); glPopMatrix();
+     
+    //PARED 2
+    glPushMatrix(); glScaled(70, 25, 1); glTranslatef(0, 1, 50); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+
+    //PARED 3
+    glPushMatrix(); glScaled(1, 25, 50); glTranslatef(70, 1, 0); glColor3f(0, 0.5, 1); glutSolidCube(2); glPopMatrix();
+
+    //PARED 4
+    glPushMatrix(); glScaled(25, 25, 1); glTranslatef(1.8, 1, -49); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+
+    //PARED EXTRA 1
+    glPushMatrix(); glScaled(20, 25, 1); glTranslatef(-2.5, 1, -49); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+
+    //PARED EXTRA 2
+    glPushMatrix(); glScaled(30, 6, 1); glTranslatef(0, 7.33, -49); glColor3f(0.5, 0.5, 0.5);glutSolidCube(2);glPopMatrix();
+
+    // PARED EXTRA 3
+    glPushMatrix(); glScaled(1, 19.1, 1); glTranslatef(-5, 1, -49); glColor3f(0.9, 0.9, 0.9); glutSolidCube(2); glPopMatrix();
+
+    //ALERO
+    glPushMatrix(); glScaled(70, 1, 35); glTranslatef(0, 49, -2.4); glColor3f(0.3, 0.3, 0.3); glutSolidCube(2); glPopMatrix();
+
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, -118); glColor3f(0.8549, 0.9216, 0.9412); glutSolidCube(2); glPopMatrix();
+    
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(1,10 , 85); glTranslatef( 69, 6, -0.4); glColor3f(0.8549, 0.9216, 0.9412); glutSolidCube(2); glPopMatrix();
+    
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(1, 10, 85);glTranslatef( -69, 6, -0.4);glColor3f(0.8549, 0.9216, 0.9412);glutSolidCube(2);glPopMatrix();
+
+    // CRUZ
+    glPushMatrix(); glTranslatef(-60, 0, 0); glPushMatrix(); glTranslatef(48, 31.2, -119.5); glColor3f(1.0f, 0.0f, 0.0f); glBegin(GL_QUADS); glVertex2f(10, 38); 
+    
+	glVertex2f(15, 38); glVertex2f(15, 20); glVertex2f(10, 20); glEnd(); glPopMatrix(); glPushMatrix(); glTranslatef(90, 48, -119.3); glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+	
+	glColor3f(1.0f, 0.0f, 0.0f); glBegin(GL_QUADS); glVertex2f(10, 38); glVertex2f(15, 38); glVertex2f(15, 20); glVertex2f(10, 20); glEnd(); glPopMatrix(); glPopMatrix(); 
+
+    //SILLA 1
+    glPushMatrix(); glTranslatef(50, 10, 47); DibujarSilla(); glPopMatrix();
+
+    //SILLA 2
+    glPushMatrix(); glTranslatef(39, 10, 47); DibujarSilla(); glPopMatrix();
+    
+    //SILLA 3
+    glPushMatrix(); glTranslatef(28, 10, 47); DibujarSilla(); glPopMatrix();
+
+    //SILLA 4
+    glPushMatrix(); glTranslatef(50, 10, 20); DibujarSilla(); glPopMatrix();
+    
+    //SILLA 5
+    glPushMatrix(); glTranslatef(39, 10, 20); DibujarSilla(); glPopMatrix();
+
+    //SILLA 6
+    glPushMatrix(); glTranslatef(28, 10, 20); DibujarSilla(); glPopMatrix();
+
+    //BASE DE SILLAS 1
+    glPushMatrix(); glTranslatef(40, 5, 44); DibujarBaseSillas(); glPopMatrix();
+
+    //BASE DE SILLAS 2
+    glPushMatrix(); glTranslatef(40, 5, 17); DibujarBaseSillas(); glPopMatrix();
+    
+    // RECEPCION
+    glPushMatrix(); glScaled(1, 11, -20); glTranslatef(-30, 1.001, -1); glColor3f(0.93, 0.8, 0.66); glutSolidCube(2); glPopMatrix();
+    
+    glPushMatrix(); glScaled(19, 11, 1); glTranslatef(-2.6, 1.001, -1); glColor3f(0.93, 0.8, 0.66); glutSolidCube(2); glPopMatrix();
+    
+    glPushMatrix(); glScaled(20, 1, 5); glTranslatef(-2.45, 21, 0.6); glColor3f(0.93, 0.8, 0.66); glutSolidCube(2); glPopMatrix();
+    
+    glPushMatrix();glTranslatef(-71, 3, -2.05);glColor3f(0.8, 0.8, 0.8);glBegin(GL_QUADS); glVertex2f(3, 3);glVertex2f(27, 3);
+    
+	glVertex2f(27, 1); glVertex2f(3, 1); glEnd(); glPopMatrix(); glPushMatrix(); glTranslatef(-71, 12, -2.05); glColor3f(0.8, 0.8, 0.8); glBegin(GL_QUADS);
+	 
+    glVertex2f(3, 3); glVertex2f(40.5, 3); glVertex2f(40.5, 1); glVertex2f(3, 1);glEnd(); glPopMatrix();
+    
+    glPushMatrix(); glScaled(5, 20, 0.5);glTranslatef(-13, 1, -90);glColor3f(1, 1, 1);glutSolidCube(2); glPopMatrix();
+
+    //ESTANTE DE LIBROS
+    glPushMatrix(); glScaled(5, 20, 0.5); glTranslatef(-13, 1, -40); glColor3f(1, 1, 1); glutSolidCube(2); glPopMatrix();
+    
+    //LIBRO 1
+    glPushMatrix(); 
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -80);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -78);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -76);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -74);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -72);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -70);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -68);
+    glColor3f(0, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    //
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -80);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -50);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -52);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -54);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -56);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro 2
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 3.5, -58);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -80);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 1.2, -78);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -76);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -74);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -72);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -70);
+    glColor3f(0, 0, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -68);
+    glColor3f(0, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -66);
+    glColor3f(0, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); //libro3
+    glScaled(5, 4, 0.5);
+    glTranslatef(-13, 6, -64);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    
+    //ruedas de camilla
+    DibujarRueda(-107, 1, -55); // Rueda 1 derecha izquierda, arriba abajo, adelante atras
+    DibujarRueda(-93.2, 1, -55); // Rueda 2derecha izquierda, arriba abajo, adelante atras
+    DibujarRueda(-107.2, 1, -85); // Rueda 3derecha izquierda, arriba abajo, adelante atras
+    DibujarRueda(-93.4, 1, -85); // Rueda 4derecha izquierda, arriba abajo, adelante atras
+
+
+
+//colchon de la camilla
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(-100, 7.5, -70); // Posición de la colchon (elevada)
+    glScalef(15, 2, 30); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+    
+     //sabana de la camilla
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(-100, 9, -75); // Posición de la sabana (elevada)
+    glScalef(15, 0.5, 20); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(-100, 9, -60); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(7, 3, 4); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+//apoyo de almohada
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(-100, 9, -55); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(14, 2, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+
+    // Dibujar las patas de la camilla
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1
+    glTranslatef(-107, 5, -55); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(0.2,10, 0.2); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+
+
+    glPushMatrix(); // Pata 2
+    glTranslatef(-93.2, 5, -55); // Posición de la pata 2 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(0.2,10, 0.2); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+
+    glPushMatrix(); // Pata 3
+    glTranslatef(-107, 5, -85); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(0.2,9, 0.2); // Tamaño de la pata 3 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+
+    glPushMatrix(); // Pata 4
+    glTranslatef(-93.2, 5, -85); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(0.2,9, 0.2); // Tamaño de la pata 4 (ancho, alto, profundidad)aumento largo de patas
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    glPushMatrix();  //asiento DE RECEPCION
+    glTranslatef(-64, 39.5, -32);
+    glScaled(4, 0.5, 12);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //estante
+    glTranslatef(-64, 29.5, -32);
+    glScaled(4, 0.5, 12);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //estante
+    glTranslatef(-64, 19.5, -32);
+    glScaled(4, 0.5, 12);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //estante
+    glTranslatef(-64, 9.5, -32);
+    glScaled(4, 0.5, 12);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //estante
+    glTranslatef(-64, 0.5, -32);
+    glScaled(4, 0.5, 12);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    //silla de mesa
+     glPushMatrix(); // silla mesa 
+    glTranslatef(-45, 20, 25);
+    DibujarSilla();
+    glPopMatrix();
+
+   //patas silla mesa
+glPushMatrix(); //pata 1
+  glTranslatef(-49, 8, 25);
+    glScaled(0.5, 8, 0.5);
+    glColor3f(0, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+glPushMatrix(); //pata 2
+  glTranslatef(-42, 8, 25);
+    glScaled(0.5, 8, 0.5);
+    glColor3f(0, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    
+    glPushMatrix(); //pata 3
+  glTranslatef(-49, 7, 19);
+    glScaled(0.5, 8, 0.5);
+    glColor3f(0, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+glPushMatrix(); //pata 4
+  glTranslatef(-42, 7, 19);
+    glScaled(0.5, 8, 0.5);
+    glColor3f(0, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+ 
+    	glPushMatrix();
+	glScalef(28,1,15);
+	glTranslatef(-8,0.2,-11.5);
+	glBegin(GL_POLYGON);
+	glColor3ub(255,255,255);
+	glVertex3f(-3,0,2.61); //h
+	glVertex3f(-3,0,3.21); //e
+	glVertex3f(-1.4,0,3.21); //f
+	glVertex3f(-1.4,0,2.61); //c
+	glEnd();
+	glPopMatrix();
+	//----------------------
+	glPushMatrix();
+	glScalef(28,1,15);
+	glTranslatef(-3,0.2,-11.5);
+	glBegin(GL_POLYGON);
+	glColor3ub(255,255,255);
+	glVertex3f(-3,0,2.61); //h
+	glVertex3f(-3,0,3.21); //e
+	glVertex3f(-1.4,0,3.21); //f
+	glVertex3f(-1.4,0,2.61); //c
+	glEnd();
+	glPopMatrix();
+	//----------raya blanca
+	glPushMatrix();
+	glScalef(28,1,15);
+	glTranslatef(2,0.2,-11.5);
+	glBegin(GL_POLYGON);
+	glColor3ub(255,255,255);
+	glVertex3f(-3,0,2.61); //h
+	glVertex3f(-3,0,3.21); //e
+	glVertex3f(-1.4,0,3.21); //f
+	glVertex3f(-1.4,0,2.61); //c
+	glEnd();
+	glPopMatrix();
+	//-------------------------------------
+	glPushMatrix();
+	glScalef(28,1,15);
+	glTranslatef(7,0.2,-11.5);
+	glBegin(GL_POLYGON);
+	glColor3ub(255,255,255);
+	glVertex3f(-3,0,2.61); //h
+	glVertex3f(-3,0,3.21); //e
+	glVertex3f(-1.4,0,3.21); //f
+	glVertex3f(-1.4,0,2.61); //c
+	glEnd();
+	glPopMatrix();
+	//-------------------------------------
+	glPushMatrix();
+	glScalef(28,1,15);
+	glTranslatef(12,0.2,-11.5);
+	glBegin(GL_POLYGON);
+	glColor3ub(255,255,255);
+	glVertex3f(-3,0,2.61); //h
+	glVertex3f(-3,0,3.21); //e
+	glVertex3f(-1.4,0,3.21); //f
+	glVertex3f(-1.4,0,2.61); //c
+	glEnd();
+	glPopMatrix();
+
+
+
+// AVANCE T2
+
+    glPushMatrix(); //puerta de Ambulancia
+	glTranslatef(-190, -1.8, 50);
+	glBegin(GL_POLYGON);
+	glColor3f(0.8157, 0.9882, 0.9882);
+	glVertex2f(1, 40); 
+	glVertex2f(50, 40); 
+	glVertex2f(50, 1); 
+	glVertex2f(1, 1); 
+	glEnd();
+	glPopMatrix();
+	
+	glPushMatrix();  //puerta barra
+    glTranslatef(-165, 18.8, 50);
+    glScaled(1, 19.5, 1);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+
+
+    glPushMatrix(); //puerta interior Recepcion
+	glTranslatef(-20, -1, 49);
+	glBegin(GL_POLYGON);
+	glColor3f(0.8157, 0.9882, 0.9882);
+	glVertex2f(1, 40); 
+	glVertex2f(25, 40); 
+	glVertex2f(25, 1); 
+	glVertex2f(1, 1); 
+	glEnd();
+	glPopMatrix();
+	
+	
+	glPushMatrix();
+	glTranslatef(0.2, 50, 1);
+	Floor();
+	glColor3f(0, 0, 0);
+	glPopMatrix();
+
+
+    glPushMatrix(); //Ventana 1
+    glTranslatef(140, 7, 48.748);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 2
+    glTranslatef(180, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 3
+    glTranslatef(100, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 4
+    glTranslatef(20, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 5
+    glTranslatef(-60, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 6
+    glTranslatef(-140, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    glPushMatrix(); //Ventana 7
+    glTranslatef(-220, 50, 49.5);
+    DibujarVentana();
+    glPopMatrix();
+    
+    
+    glPushMatrix(); //columnas 2do piso
+    glTranslatef(0, 50, 0);
+    DibujarCilindro4();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0, 50, 0);
+    DibujarCilindro3();
+    glPopMatrix();
+    
+    
+    
+    
+//    if (bombillaEncendida) {
+//        // Configurar iluminación para simular la luz de la bombilla
+//        configurarIluminacionBombilla();
+//        glEnable(GL_LIGHT0);
+//    } else {
+//        // Configurar iluminación normal de la sala
+//        glDisable(GL_LIGHT0);
+//    }
+    
+    //primer piso camilla 1
+//colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 12, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 7.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 7.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,6, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,20, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 6, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,20, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 18, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 13, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 15, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    
+    
+    //camilla 2 primer piso
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 12, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(132, 7.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(109, 7.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(132,6, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,20, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(109, 6, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,20, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 18, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 13, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 15, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+     //fin camilla 2
+    
+    //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 8, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 10, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 4, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+    
+    //fin comoda 1
+    
+    
+    //comoda 2 de camilla2 primer piso
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 8, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 10, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 4, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+    
+    //fin comoda 1
+    
+    
+    //cortina 1
+   
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 25, 275); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 20, 285); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 15, 280); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    
+         glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 15, 275); 
+    glScalef(1.5, 50, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // 
+ 
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 20, 255); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 1, 260); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 10, 262); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); //
+       //fin cortina 1
+    
+    
+    
+        //cortina 2
+
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 25, 275); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 20, 285); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 15, 280); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    
+         glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 15, 275); 
+    glScalef(1.5, 50, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // 
+ 
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 20, 255); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 1, 260); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 1, 269); 
+    glScalef(2, 35, 0.1); //_-------
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+      glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 20, 285); 
+    glScalef(2, 35, 0.1); //_-------
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(75, 15, 284); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); //
+       //fin cortina 2
+       
+    
+    //camilla 3 primer piso
+    
+     //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 12, 275); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(62, 7.5, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(38, 7.5, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3// Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glTranslatef(62, 6, 250.5);
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(38, 6, 250.5); 
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(50, 18, 298); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 13, 270); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 15, 295); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la almohada
+     //fin camilla 2
+    
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 8, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 10, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 4, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 2
+    
+    
+    
+    //camilla 4 frente
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 12, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 7.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 7.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,6, 104.5); 
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 6, 104.5); 
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 18, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 13, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 15, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 8, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 10, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 4, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+	glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(155, 12, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(143, 7.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(167, 7.5, 55); 
+    glScalef(1,25, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(143,6, 104.5); 
+    glScalef(1,20, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(167, 6, 104.5);
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 18, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 13, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 15, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 8, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 10, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 4, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+     
+     
+     
+    //cortina 3
+    
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 15, 80); 
+    glScalef(1.5, 50, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // 
+   
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 25, 70); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 20, 80); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 15, 89); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+ 
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 20, 100); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 1, 92); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 10, 95); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); //
+       //fin cortina 3
+       
+    
+    
+    //cortina 4
+    
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 15, 80); 
+    glScalef(1.5, 50, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // 
+   
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(170, 25, 70); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 20, 80); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 15, 89); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+ 
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 20, 100); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 1, 92); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(110, 10, 95); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); //
+       //fin cortina 3
+       
+    
+    
+     //camilla 6 frente
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 12, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84, 7.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 7.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84,6, 104.5); 
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 6, 104.5); 
+    glScalef(1,20, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 18, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 13, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 15, 58);
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 8, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 10, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 4, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+     
+        //cortina 5
+    
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 15, 80); 
+    glScalef(1.5, 50, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // 
+   
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 25, 70); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 20, 80); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 15, 89); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+ 
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 20, 100); 
+    glScalef(2, 30, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 1, 92); 
+    glScalef(2, 35, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); // lineas cortina
+    
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(40, 10, 95); 
+    glScalef(2, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); //
+       //fin cortina 5
+
+    glTranslatef(-7.0f, 44.0f, 48.0f); // Mueve el ventilador hacia atrás para que sea visible
+    drawFan();
+    
+    
+    
+    // MONZON ROJAS JEFFREY (dentro de MOSTRAR() )
+    dibujarPalmera();
+    
+    glTranslatef(-1000, 0, 0);
+    dibujarPalmera();
+    
+    glTranslatef(0, 0, 500);
+    dibujarPalmera();
+    
+    glTranslatef(1000, 0, 0);
+    dibujarPalmera();
+    
+    
+    glPushMatrix();
+    glTranslatef(0, -41, 400);
+    Pista();
+    glPopMatrix();
+    
+    glPopMatrix();
+    glPopMatrix();
+
+    
+
+    glFlush();
+    glutSwapBuffers();
+}
+
+void cambiarTamanio(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, (float)w / (float)h, 1.0, 2000.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void ratonPulsado(int boton, int estado, int x, int y) {
+    if (boton < 3) {
+        botones_raton[boton] = (estado == GLUT_DOWN);
+        ultima_x = x;
+        ultima_y = y;
+    }
+}
+
+void ratonMovido(int x, int y) {
+    if (botones_raton[0]) {
+        rotX += (y - ultima_y) * velocidadRotacion;
+        rotY += (x - ultima_x) * velocidadRotacion;
+    }
+    if (botones_raton[2]) {
+        float zoomFactor = 0.02f;
+        float minZoom = 0.1f;
+        float maxZoom = 5.0f;
+        zoom -= (y - ultima_y) * zoomFactor;
+        if (zoom < minZoom) {
+            zoom = minZoom;
+        } else if (zoom > maxZoom) {
+            zoom = maxZoom;
+        }
+    }
+    ultima_x = x;
+    ultima_y = y;
+    glutPostRedisplay();
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(800, 600);
+    glutCreateWindow("Hospital Lazarte");
+    inicializar();
+
+    const GLfloat light_ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    const GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f }; 
+    const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+    const GLfloat mat_ambient[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+    const GLfloat mat_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+    const GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    const GLfloat high_shininess[] = { 100.0f };
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+
+
+    // Crea el menú y añade las opciones
+    glutCreateMenu(menuHandler);
+    glutAddMenuEntry("Hacer de Dia", 1);
+    glutAddMenuEntry("Hacer de Noche", 2);
+    glutAddMenuEntry("Hacer Atardecer", 3);
+    glutAddMenuEntry("Hacer Clima Humedo", 4);
+    glutAddMenuEntry("Aumentar velocidad del ventilador", 5);
+    glutAddMenuEntry("Encender o apagar Foco", 6);
+    glutAddMenuEntry("salir", 7);
+
+    glutAttachMenu(GLUT_RIGHT_BUTTON); // Asocia el menú al botón derecho del mouse
+
+    glClearColor(0.5, 0.5, 0.5, 1.0); // Fondo gris por defecto
+    
+    
+    glutReshapeFunc(cambiarTamanio);
+    glutKeyboardFunc(keyboard);
+    glutMouseFunc(ratonPulsado);
+    glutMotionFunc(ratonMovido);
+    glutDisplayFunc(mostrar);
+    glutTimerFunc(0, update, 0); // Iniciar la animación
+    glutMainLoop();
+    return 0;
+}
