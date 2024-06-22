@@ -2583,13 +2583,13 @@ glPushMatrix(); //pata 4
     glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, 470.5); glColor3f(1, 1, 0); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, 470.5);     glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(69, 6, 4.55); glColor3f(1, 1, 0); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(69, 6, 4.55); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(-69, 6, 4.55); glColor3f(0.8549, 0.9216, 0.9412); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(-69, 6, 4.55); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
 
    
     glPushMatrix(); glTranslatef(-120, 1, 550); DibujarCilindro1(); glPopMatrix();
@@ -2670,7 +2670,7 @@ glPushMatrix(); //pata 4
     glutSolidCube(2);
     glPopMatrix();
 
-    //ventanas------------------------------------------------------------------------
+    //---------------------------------------------ventanas------------------------------------------------------------------------
     
     //piso 2
    
@@ -2756,91 +2756,91 @@ glPushMatrix(); //pata 4
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(250, 175, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 0, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(250, 125, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(250, 75, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(250, 25, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(374, 175, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 0, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(374, 125, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(374, 75, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral izquierdo 2 piso grande
     glTranslatef(374, 25, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();//piso
     glScaled(61,1, 270);
     glTranslatef(5.1, 1, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(5.1, 199, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(5.1, 149, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(5.1, 99, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(5.1, 49, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
@@ -2850,91 +2850,91 @@ glPushMatrix(); //pata 4
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-250, 175, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 0, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-250, 125, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-250, 75, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-250, 25, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-374, 175, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 0, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-374, 125, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-374, 75, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();  //pared lateral derecho 2 piso grande
     glTranslatef(-374, 25, 175);
     glScaled(1, 25, 270);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();//piso
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 1, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 199, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 149, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 99, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 49, 0.65);
-    glColor3f(1, 1, 0);
+    glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
    
