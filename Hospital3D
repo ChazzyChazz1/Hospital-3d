@@ -1049,14 +1049,57 @@ void dibujarPalmera(){
     glPopMatrix();
 }
 
-void dibujarCisterna();
+void dibujarCisterna(){
+
     glPushMatrix();
-    glColor3f(0, 1, 0);
-    glTranslatef(10, 40, 0); 
+    glColor3f(0.678, 0.847, 1);
+    glTranslatef(90, 210, 150); 
     glRotatef(-90, 1, 0, 0);                       
-    gluCylinder(cilindro, 10, 10, 10, 20, 20); 
+    gluCylinder(cilindro, 15, 15, 30, 20, 20); 
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3f(0.678, 0.847, 1);
+    glTranslatef(90, 240, 150); 
+    glRotatef(-90, 1, 0, 0);                       
+    glutSolidCone(15, 5, 20, 20); 
     glPopMatrix();
 
+}
+
+void baseCisterna(){
+	glPushMatrix();
+	glColor3f(1, 1, 1);
+	glScaled(40, 1, 40);
+	glTranslatef(2.75, 209, 4.2);
+	glutSolidCube(2);
+	glPopMatrix();
+	
+	glPushMatrix();
+	glColor3f(0, 0, 0);
+	glScaled(1, 5, 1);
+	glTranslatef(80, 41, 140);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glColor3f(0, 0, 0);
+	glScaled(1, 5, 1);
+	glTranslatef(140, 41, 140);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glColor3f(0, 0, 0);
+	glScaled(1, 5, 1);
+	glTranslatef(140, 41, 200);
+	glutSolidCube(2);
+	glPopMatrix();
+	glPushMatrix();
+	glColor3f(0, 0, 0);
+	glScaled(1, 5, 1);
+	glTranslatef(80, 41, 200);
+	glutSolidCube(2);
+	glPopMatrix();
+}
 
 void mostrar() {
 
@@ -2507,7 +2550,7 @@ glPushMatrix(); //pata 4
     
     
     
-    // MONZON ROJAS JEFFREY (dentro de MOSTRAR() )
+    // -----------------------------------------JEFFREY (inicio )-------------------------
     dibujarPalmera();
     
     glTranslatef(-1000, 0, 0);
@@ -2519,7 +2562,6 @@ glPushMatrix(); //pata 4
     glTranslatef(1000, 0, 0);
     dibujarPalmera();
     
-    
     glPushMatrix();
     glTranslatef(0, -41, 400);
     Pista();
@@ -2527,6 +2569,8 @@ glPushMatrix(); //pata 4
     
     glPopMatrix();
     glPopMatrix();
+
+    //-------------------------------------- Jeffrey (fin)----------------------------------------
 
     
     //-----------------------------------------------------Glenn------------------------------------------------------------------------
@@ -2589,13 +2633,13 @@ glPushMatrix(); //pata 4
     glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, 470.5);     glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, 470.5);     glColor3f(1, 1, 1); glutSolidCube(2); glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(69, 6, 4.55); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(69, 6, 4.55); glColor3f(1, 1, 1); glutSolidCube(2); glPopMatrix();
 
     //PARTE DEL ALERO
-    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(-69, 6, 4.55); glColor3f(0.5, 0.5, 0.5); glutSolidCube(2); glPopMatrix();
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(-69, 6, 4.55); glColor3f(1, 1, 1); glutSolidCube(2); glPopMatrix();
 
    
     glPushMatrix(); glTranslatef(-120, 1, 550); DibujarCilindro1(); glPopMatrix();
@@ -2949,12 +2993,54 @@ glPushMatrix(); //pata 4
     
     
     
+    
+    // ---------------------------Jeffrey (inicio)-------
+    
+    
+    //cisterna 1
+    glPushMatrix();
+    glTranslatef(0, 0, 0);
+    dibujarCisterna();
+    glPopMatrix();
+    //cisterna2
+    glPushMatrix();
+    glTranslatef(35, 0 , 0);
+    dibujarCisterna();
+    glPopMatrix();
+    //cisterna3
+    glPushMatrix();
+    glTranslatef(35, 0, 35);
+    dibujarCisterna();
+    glPopMatrix();
+    //cisterna4
+    glPushMatrix();
+    glTranslatef(0, 0, 35);
+    dibujarCisterna();
+    glPopMatrix();
+   
+    //base cisterna
+    baseCisterna();
+    
+    glPushMatrix(); //puerta interior Recepcion
+	glTranslatef(-71.8, 198, 160);
+	glRotatef(-90, 0, 1, 0);                       
+	glBegin(GL_POLYGON);
+	glColor3f(0, 0, 0);
+	glVertex2f(1, 40); 
+	glVertex2f(25, 40); 
+	glVertex2f(25, 1); 
+	glVertex2f(1, 1); 
+	glEnd();
+	glPopMatrix();
+    
+    //-----------------------------Jeffrey (fin)-------------------
+    
+    
+    
     //------------------------------- SEGUIR EDITANDO ABAJO------------- 
     
     
     
-    
-
     glFlush();
     glutSwapBuffers();
 }
