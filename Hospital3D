@@ -2523,6 +2523,425 @@ glPushMatrix(); //pata 4
     glPopMatrix();
 
     
+    //-----------------------------------------------------Glenn------------------------------------------------------------------------
+    
+       //CUARTO TRASERO
+    glPushMatrix();
+    glScaled(1, 25, 50);
+    glTranslatef(-70, 1, 7);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); 
+    glScaled(25, 25, 1);
+    glTranslatef(1.8, 1, 400);
+    glColor3f(0.5, 0.5, 0.5); 
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(30, 6, 1);
+    glTranslatef(0, 7.33, 400); 
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(1, 19.1, 1);
+    glTranslatef(0, 1,400); 
+    glColor3f(0.5, 0.5, 0.5); 
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix(); 
+    glScaled(25, 25, 1);
+    glTranslatef(-1.8, 1, 400);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(1, 25, 50);
+    glTranslatef(70, 1, 7); 
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2); 
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(70, 1, 50);
+    glTranslatef(0, 49, 7);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2); 
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(70, 1, 35);
+    glTranslatef(0, 49,12.4);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(70, 10, 1); glTranslatef(0, 6, 470.5); glColor3f(1, 1, 0); glutSolidCube(2); glPopMatrix();
+
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(69, 6, 4.55); glColor3f(1, 1, 0); glutSolidCube(2); glPopMatrix();
+
+    //PARTE DEL ALERO
+    glPushMatrix(); glScaled(1, 10, 85); glTranslatef(-69, 6, 4.55); glColor3f(0.8549, 0.9216, 0.9412); glutSolidCube(2); glPopMatrix();
+
+   
+    glPushMatrix(); glTranslatef(-120, 1, 550); DibujarCilindro1(); glPopMatrix();
+    glPushMatrix(); glTranslatef(0, 1, 550); DibujarCilindro1(); glPopMatrix();
+   
+
+    //3ER PISO
+
+    glPushMatrix();  //pared frontal 3 piso grande
+    glTranslatef(1, 125, 51);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared trasera 3 piso grande
+    glTranslatef(1, 125, 300);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 3 piso grande
+    glTranslatef(250, 125, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 3 piso grande
+    glTranslatef(-250, 125, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //techo 3 piso grande
+    glTranslatef(1, 149, 175);
+    glScaled(250, 1, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    //4TO PISO
+
+    glPushMatrix();  //pared frontal 2 piso grande
+    glTranslatef(1, 175, 51);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared trasera 2 piso grande
+    glTranslatef(1, 175, 300);
+    glScaled(250, 25, 1);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(250, 175, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-250, 175, 175);
+    glScaled(1, 25, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //techo 2 piso grande
+    glTranslatef(1, 199, 175);
+    glScaled(250, 1, 124);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    //ventanas------------------------------------------------------------------------
+    
+    //piso 2
+   
+
+    glPushMatrix(); glTranslatef(-220, 50, 301); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-140, 50, 301); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-60, 50, 301); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(20, 50, 301); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(100, 50, 301); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(180, 50, 301); DibujarVentana(); glPopMatrix();
+
+    //piso 3
+    glPushMatrix(); glTranslatef(-220, 100, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-140, 100, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-60, 100, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(20, 100, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(100, 100, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(180, 100, 47); DibujarVentana(); glPopMatrix();
+
+    glPushMatrix(); glTranslatef(-220, 100, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-140, 100, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-60, 100, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(20, 100, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(100, 100, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(180, 100, 300); DibujarVentana(); glPopMatrix();
+
+    //piso 4
+    glPushMatrix(); glTranslatef(-220, 150, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-140, 150, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-60, 150, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(20, 150, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(100, 150, 47); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(180, 150, 47); DibujarVentana(); glPopMatrix();
+
+    glPushMatrix(); glTranslatef(-220, 150, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-140, 150, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(-60, 150, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(20, 150, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(100, 150, 300); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(180, 150, 300); DibujarVentana(); glPopMatrix();
+
+    //--------------------ventana fin-------------------------------------------------
+
+    //asotea
+    glPushMatrix();
+    glScaled(1, 25, 50);
+    glTranslatef(-70, 9, 3.5);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(70, 25, 1);
+    glTranslatef(0, 9, 225);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(1, 25, 50);
+    glTranslatef(70, 9, 3.5);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(70, 25, 1);
+    glTranslatef(0, 9, 125);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(70, 1, 50);
+    glTranslatef(0,250, 3.5);
+    glColor3f(0.5, 0.5, 0.5);
+     glutSolidCube(2);
+    glPopMatrix();
+
+    //CUARTOS LATERALES------------------------------------------------------------------------------------------------------------------
+    
+    //LADO IZQUIERDO
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(250, 175, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(250, 125, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(250, 75, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(250, 25, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(374, 175, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(374, 125, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(374, 75, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral izquierdo 2 piso grande
+    glTranslatef(374, 25, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();//piso
+    glScaled(61,1, 270);
+    glTranslatef(5.1, 1, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(5.1, 199, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(5.1, 149, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(5.1, 99, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(5.1, 49, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    //lado derecho-------------------------------------------------------------------------------------------
+
+    //LADO derecho
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-250, 175, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-250, 125, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-250, 75, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-250, 25, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-374, 175, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 0, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-374, 125, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-374, 75, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();  //pared lateral derecho 2 piso grande
+    glTranslatef(-374, 25, 175);
+    glScaled(1, 25, 270);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();//piso
+    glScaled(61, 1, 270);
+    glTranslatef(-5.1, 1, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(-5.1, 199, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(-5.1, 149, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(-5.1, 99, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 1, 270);
+    glTranslatef(-5.1, 49, 0.65);
+    glColor3f(1, 1, 0);
+    glutSolidCube(2);
+    glPopMatrix();
+   
+    //----------------------------------------------------Glenn fin-----------------------------------------------------------------------
+    
+    
+    
 
     glFlush();
     glutSwapBuffers();
@@ -2593,6 +3012,7 @@ int main(int argc, char** argv) {
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+    
 
 
     // Crea el menú y añade las opciones
