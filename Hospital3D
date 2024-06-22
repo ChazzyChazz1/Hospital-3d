@@ -1049,7 +1049,13 @@ void dibujarPalmera(){
     glPopMatrix();
 }
 
-
+void dibujarCisterna();
+    glPushMatrix();
+    glColor3f(0, 1, 0);
+    glTranslatef(10, 40, 0); 
+    glRotatef(-90, 1, 0, 0);                       
+    gluCylinder(cilindro, 10, 10, 10, 20, 20); 
+    glPopMatrix();
 
 
 void mostrar() {
@@ -2939,6 +2945,12 @@ glPushMatrix(); //pata 4
     glPopMatrix();
    
     //----------------------------------------------------Glenn fin-----------------------------------------------------------------------
+    
+    
+    
+    
+    //------------------------------- SEGUIR EDITANDO ABAJO------------- 
+    
     
     
     
