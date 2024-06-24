@@ -394,7 +394,70 @@ void DibujarAmbulancia() {
     glutSolidSphere(2, 20, 20); // Dibujar la luz derecha                                        //COPIADO
     glPopMatrix(); // Fin de las luces
 }
-
+void DibujarAmbulancia2() {
+    // Cuerpo de la ambulancia
+    glPushMatrix();
+    glColor3f(0.68f, 0.85f, 0.90f); // Color blanco
+    glTranslatef(-220, 13, -20); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 60); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+     // Cuerpo superior de la ambulancia
+    glPushMatrix();                                            //COPIADO
+    glColor3f(0.68f, 0.85f, 0.90f); // Color blanco-------------------------------------------------------------doshfjidhfijbfidbfdbfbsdfhbdfsd
+    glTranslatef(-220, 20, -25); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 50); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+     glPushMatrix();
+    glColor3f(0.68f, 0.85f, 0.90f); // Color blanco
+    glTranslatef(-220, 10.5, -22); // Posición de la ambulancia (elevada y hacia atrás)
+    glScalef(30, 15, 50); // Tamaño de la ambulancia (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ambulancia
+    glPopMatrix(); // Fin del cuerpo de la ambulancia
+    
+    
+    //ruedas de la ambulancia
+    
+    DibujarRuedaAmbulancia(-235.5, 5, -42); // Rueda 1 derecha izquierda, arriba abajo, de la ambulancia
+      DibujarRuedaAmbulancia(-235.5, 5, -6); 
+    DibujarRuedaAmbulancia(-205, 5, -6);                             //COPIADO 
+    DibujarRuedaAmbulancia(-205, 5, -42); 
+    
+    
+    
+    // Ventana delantera de la ambulancia azul
+    glPushMatrix();
+    glColor3f(0.0f, 0.8f, 0.8f); // Color azul
+    glTranslatef(-220, 19, 0.4); // Posición de la ventana (elevada y hacia atrás)
+    glScalef(27, 16, 1); // Tamaño de la ventana (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana delantera
+    
+    // Ventanas laterales de la ambulancia azul
+    glPushMatrix();
+    glColor3f(0.0f, 0.8f, 0.8f); // Color azul
+    glTranslatef(-235, 15, -30); // Posición de la ventana (elevada y hacia la izquierda)
+    glScalef(0.2, 8, 40); // Tamaño de la ventana (ancho, alto, profundidad)                                 
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana lateral izquierda azul
+    
+    glPushMatrix();
+    glColor3f(0.0f, 0.8f, 0.8f); // Color azul
+    glTranslatef(-205, 20, -30); // Posición de la ventana (elevada y hacia la derecha)
+    glScalef(0.2, 8, 40); // Tamaño de la ventana (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la ventana
+    glPopMatrix(); // Fin de la ventana lateral derecha azul
+    
+    // Luces de la ambulancia
+    glPushMatrix();
+    glColor3f(1.0, 1.0, 0.0); // Color amarillo
+    glTranslatef(-231, 15, 9); // Posición de la luz izquierda (elevada y hacia la izquierda)
+    glutSolidSphere(2, 20, 20); // Dibujar la luz izquierda
+    glTranslatef(22, 0, 0); // Posición de la luz derecha (hacia la derecha)
+    glutSolidSphere(2, 20, 20); // Dibujar la luz derecha                                        //COPIADO
+    glPopMatrix(); // Fin de las luces
+}
 void car() {
 	
 	glPushMatrix(); 
@@ -756,7 +819,374 @@ void car() {
 
     glPopMatrix();
 }
+//----------------------------carro------------------------------------------------------------------------------------
 
+
+
+void carro() {
+	
+	glPushMatrix(); 
+	glTranslatef(300, 1.5, -135);
+	glRotatef(-90, 0, 1, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+
+
+    glPopMatrix();
+}
+
+
+
+//---------------------------------------------------fin carro----------------------------------------------
 void Terreno (){
 	
 	glTranslatef (0, 0, 0);
@@ -1104,7 +1534,8 @@ void baseCisterna(){
 void RayaBlanca(){
 	
 	glPushMatrix();
-	glScalef(28,1,15);
+	glScalef(15,1,35);
+	glRotatef(90, 0, 1, 0);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
 	glVertex3f(-3,0,2.61); 
@@ -1140,6 +1571,9 @@ void mostrar() {
     Pista();
     Floor();
     DibujarBombilla();
+    carro();
+DibujarAmbulancia2();
+  
     
     
     
@@ -1530,7 +1964,7 @@ glPushMatrix(); //pata 4
 	glScalef(28,1,15);
 	glTranslatef(-8,0.2,-13);
 	glBegin(GL_POLYGON);
-	glColor3ub(255,255,255);
+	glColor3f(1, 1, 1);
 	glVertex3f(-3,0,2.61); //h
 	glVertex3f(-3,0,3.21); //e
 	glVertex3f(-1.4,0,3.21); //f
@@ -1554,7 +1988,7 @@ glPushMatrix(); //pata 4
 	glScalef(28,1,15);
 	glTranslatef(2,0.2,-13);
 	glBegin(GL_POLYGON);
-	glColor3ub(255,255,255);
+	glColor3f(1, 1, 1);
 	glVertex3f(-3,0,2.61); //h
 	glVertex3f(-3,0,3.21); //e
 	glVertex3f(-1.4,0,3.21); //f
@@ -1566,7 +2000,7 @@ glPushMatrix(); //pata 4
 	glScalef(28,1,15);
 	glTranslatef(7,0.2,-13);
 	glBegin(GL_POLYGON);
-	glColor3ub(255,255,255);
+	glColor3f(1, 1, 1);
 	glVertex3f(-3,0,2.61); //h
 	glVertex3f(-3,0,3.21); //e
 	glVertex3f(-1.4,0,3.21); //f
@@ -1578,7 +2012,7 @@ glPushMatrix(); //pata 4
 	glScalef(28,1,15);
 	glTranslatef(12,0.2,-13);
 	glBegin(GL_POLYGON);
-	glColor3ub(255,255,255);
+	glColor3f(1, 1, 1);
 	glVertex3f(-3,0,2.61); //h
 	glVertex3f(-3,0,3.21); //e
 	glVertex3f(-1.4,0,3.21); //f
@@ -1971,7 +2405,7 @@ glPushMatrix(); //pata 4
     glPopMatrix(); // Fin de la comoda
      
      
-     //cajon 1 de comoda1
+     //cajon 1 de comoda2
      glPushMatrix(); 
     glColor3f(0.0, 1.0, 1.0); // Color blanco
     glTranslatef(90, 10, 291.8); 
@@ -1979,14 +2413,14 @@ glPushMatrix(); //pata 4
     glutSolidCube(1); 
     glPopMatrix(); // Fin de la comoda
     
-      //cajon 2 de comoda1
+      //cajon 2 de comoda2
      glPushMatrix(); 
     glColor3f(0.0, 1.0, 1.0); // Color blanco
     glTranslatef(90, 4, 291.8); 
     glScalef(22, 4, 5); 
     glutSolidCube(1); 
     glPopMatrix(); // Fin de la comoda
-     //fin de cajones de comoda 1
+     //fin de cajones de comoda 2
     
     //fin comoda 1
     
@@ -2309,6 +2743,8 @@ glPushMatrix(); //pata 4
     glutSolidCube(1); 
     glPopMatrix(); // Fin de la comoda
     
+    
+    //camilla 5 frente primer piso
 	glPushMatrix(); // colchon
     glColor3f(1.0, 1.0, 1.0); // Color blanco
     glTranslatef(155, 12, 80); 
@@ -2686,8 +3122,9 @@ glPushMatrix(); //pata 4
     glTranslatef(1000, 0, 0);
     dibujarPalmera();
     
+    //pista trasera
     glPushMatrix();
-    glTranslatef(0, -41, 400);
+    glTranslatef(0, -43, 405);
     Pista();
     glPopMatrix();
     
@@ -3170,13 +3607,2017 @@ glPushMatrix(); //pata 4
     glEnd();
     glPopMatrix();
     
-    
     glPushMatrix();
-    glTranslatef(0,0.2,50);
+	glTranslatef(1065, 0.4, 330);
+	glColor3f(0, 0, 0);
+    glBegin(GL_QUADS);
+    glVertex3f(-65, 0.5, -510.0);
+    glVertex3f(0, 0.5, -510.0); 
+    glVertex3f(0, 0.5, 510.0);
+    glVertex3f(-65, 0.5, 510.0);
+    glEnd();
+    glPopMatrix();
+    
+    //Rayas blancas de las pistas laterales
+    glPushMatrix();
+    glTranslatef(-1075,1,-90);
     RayaBlanca();
     glPopMatrix();
     
+    glPushMatrix();
+    glTranslatef(-1075,1, 20);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1075,1, 130);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1075,1, 240);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1075,1, 350);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1075,1, 460);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1075,1, 570);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 570);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 460);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 350);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 240);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 130);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, 20);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(990,1, -90);
+    RayaBlanca();
+    glPopMatrix();
+    
+    //rayas blancas de pista horizontal trasera
+    
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 850);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 740);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 630);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 520);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 410);
+    RayaBlanca();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 300);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 290);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 180);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , 70);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -40);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -150);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -260);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -370);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -480);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -590);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -600);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -710);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -820);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -930);
+    RayaBlanca();
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(-850, 1.2 , -1040);
+    RayaBlanca();
+    glPopMatrix();
     //-----------------------------Jeffrey (fin)-------------------
+    
+    
+    //-------------------------MAX INICIO------------------------------------------------------
+    
+    
+    
+    //-------------------------MAX INICIO------------------------------------------------------
+    
+    
+    
+    
+        //inicio segundo piso camilla 1
+//colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 64, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 62.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 62.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,58.6, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 58.6, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 70, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 64.5, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 68, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    //fin camilla 1
+    
+    
+    //camilla 2 segundo piso inicio
+    
+     
+    //camilla 2 segundo piso
+    
+    //colchon de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 64, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(132, 62.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(109, 62.5, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(132,58.6, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(109, 58.6, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 70, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 64.5, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 68, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+     
+    //fin camilla 2 segundo piso
+    
+    //---------------------------------
+    
+    //comoda1  de camilla segundo piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 60, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 62, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 56, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+    
+    //fin comoda 1 segundo piso
+    
+    
+    //comoda 2 de camilla2 segundo piso
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 60, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 62, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 56, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 2
+    
+    //fin comoda2 segundo piso
+//----------------------------------------------------------------------------
+//camilla 3 segundo piso
+    
+     //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 64, 275); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(62, 62.5, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(38, 62.5, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3// Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glTranslatef(62, 58.6, 250.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(38, 58.6, 250.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(50, 70, 298); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 64.5, 270); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 68, 295); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la almohada
+     //fin camilla 2
+    
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 60, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 62, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 56, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda3 seundo piso
+    
+    //-----------------------------------------------------------------------------
+    //camilla 4 frente
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 64, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 62.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 62.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,58.6, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 58.6, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 70, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 64.2, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 68, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 60, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 62, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 56, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    //--------------------fin comoda y camilla 4 segundo piso--------------------------------------
+    
+    //-----------------------------------------------------------------------------------------
+    
+     //colchon 6 de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 64, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84, 62.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 62.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84,58.6, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 58.6, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 70, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 64.2, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 68, 58);
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 5
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 60, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 62, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 56, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    //fin de camilla 6 segundo piso
+    //------------------------------------------------------------------------------------------
+    //camilla 5 frente primer piso
+	glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(155, 64, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(143,62.5, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(167, 62.5, 55); 
+    glScalef(1,25, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(143,58.6, 104.5); 
+    glScalef(1,17, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(167, 58.6, 104.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 70, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 64.2, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 68, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 60, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 62, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 56, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+     //----------------------------------------------fin camillas----------------
+     
+     //-------------------------------------------------------------------------------------------------
+     //--------------------------------------------------------------------------------------------------
+     
+     
+     //camillas tercer piso-----------------------------------------------------
+     
+             //inicio segundo piso camilla 1
+//colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 112.5, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 111, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 111, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,107, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 107, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 118.2, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 113, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 117, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    //fin camilla 1
+    
+    
+    //camilla 2 segundo piso inicio
+    
+     
+    //camilla 2 segundo piso
+    
+    //colchon de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 112.5, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(132, 111, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(109, 111, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(132,107, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(109, 107, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 118.2, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 113, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 117, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+     
+    //fin camilla 2 segundo piso
+    
+    //---------------------------------
+    
+    //comoda1  de camilla segundo piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 110, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 112, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 106, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+    
+    //fin comoda 1 tercer piso
+    
+    
+    //comoda 2 de camilla2 segundo piso
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 110, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 112, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 106, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 2
+    
+    //fin comoda2 segundo piso
+//----------------------------------------------------------------------------
+//camilla 3 segundo piso
+    
+     //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 112.5, 275); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(62, 111, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(38, 111, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3// Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glTranslatef(62, 107, 250.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(38, 107, 250.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(50, 118.2, 298); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 113, 270); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 117, 295); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la almohada
+     //fin camilla 2
+    
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 110, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 112, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 106, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda3 seundo piso
+    
+    //-----------------------------------------------------------------------------
+    //camilla 4 frente
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 112.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 111, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 111, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,107, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 107, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 118.2, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 113, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 117, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 110, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 112, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 106, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    //--------------------fin comoda y camilla 4 segundo piso--------------------------------------
+    
+    //-----------------------------------------------------------------------------------------
+    
+     //colchon 6 de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 112.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84, 111, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 111, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84,107, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 107, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 118.2, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 113, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 117, 58);
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 5
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 110, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 112, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 106, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    //fin de camilla 6 segundo piso
+    //------------------------------------------------------------------------------------------
+    //camilla 5 frente primer piso
+	glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(155, 112.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(143,111, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(167, 111, 55); 
+    glScalef(1,25, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(143,107, 104.5); 
+    glScalef(1,17, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(167, 107, 104.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 118.2, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 113, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 117, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 110, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 112, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 106, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+     //--------------------------------fin de camillas tercer piso--------------------------------------------
+     
+     
+     
+       //sndaISDBashdbahksdbkadbkjnasbdasbdas
+     //camillas tercer piso-----------------------------------------------------
+     
+             //inicio segundo piso camilla 1
+//colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 163.5, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 162.3, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 162.3, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,158.5, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,16, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 158.5, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,16, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 169.5, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 164, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 167, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    //fin camilla 1
+    
+    
+    //camilla 2 segundo piso inicio
+    
+     
+    //camilla 2 segundo piso
+    
+    //colchon de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 163.5, 275); // -derecha +izquierda, +arriba -abajo , -adelante +atrasPosición de la colchon (elevada)
+    glScalef(25, 2, 50); // Tamaño de la colchon (ancho costados , alto, profundidad)
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(132, 162.3, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(109, 162.3, 298); // Posición de la pata 1 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,25, 0.5); // Tamaño de la pata 2 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(132,158.5, 250.5); // Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(109, 158.5, 250.5); // Posición de la pata 4 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glScalef(1,17, 0.5); // Tamaño de la pata 1 (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 169.5, 298); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(25, 10, 0.1); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 164, 270); // Posición de la sabana (elevada)
+    glScalef(25, 2, 35); // Tamaño de la colchon (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la sabana
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(120, 167, 295); // Posición de la almohada (elevada)derecha izquierda, arriba abajo, largo
+    glScalef(18, 7, 7); // Tamaño de la almohada (ancho, alto, profundidad)
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+     
+    //fin camilla 2 segundo piso
+    
+    //---------------------------------
+    
+    //comoda1  de camilla segundo piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 160.5, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 162, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 156, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+    
+    //fin comoda 1 tercer piso
+    
+    
+    //comoda 2 de camilla2 segundo piso
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 160.5, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 162, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda2
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(90, 156, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 2
+    
+    //fin comoda2 segundo piso
+//----------------------------------------------------------------------------
+//camilla 3 segundo piso
+    
+     //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 163.5, 275); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); // Dibujar la colchon
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(62, 162.3, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(38, 162.3, 298); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3// Posición de la pata 3 (elevada)derecha izquierda,arrba abajo,adelante atras
+    glTranslatef(62, 158.5, 250.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 3
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(38, 158.5, 250.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(50, 169.5, 298); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 164, 270); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(50, 167, 295); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la almohada
+     //fin camilla 2
+    
+    //comoda de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 160.5, 295); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 162, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda3
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(20, 156, 291.8); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda3 seundo piso
+    
+    //-----------------------------------------------------------------------------
+    //camilla 4 frente
+    
+    //colchon de la camilla primer piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 163.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(232, 162.3, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 2 izquierda
+    glTranslatef(209, 162.3, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 2
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(232,158.5, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(209, 158.5, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 4
+    glPopMatrix(); // Fin de la pata 4
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 169.5, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de apoyo de la almohada
+    
+    
+     //sabana de la camilla primer piso              
+     glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 164, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la sabana
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(220, 167, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); // Dibujar la almohada
+    glPopMatrix(); // Fin de la almohada
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 160.5, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 162, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(190, 156, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    //--------------------fin comoda y camilla 4 segundo piso--------------------------------------
+    
+    //-----------------------------------------------------------------------------------------
+    
+     //colchon 6 de la camilla segundo piso 
+    glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 163.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84, 162.3, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+      // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 162.3, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(84,158.5, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+     // Dibujar las patas de la camilla segundo piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(106, 158.5, 104.5); 
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 169.5, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla segundo piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 164, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1);       
+    glPopMatrix(); 
+    
+    //almohada de la camilla segundo piso
+    glPushMatrix(); // almohada
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(95, 167, 58);
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 5
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 160.5, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 162, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(65, 156, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    //fin de camilla 6 segundo piso
+    //------------------------------------------------------------------------------------------
+    //camilla 5 frente primer piso
+	glPushMatrix(); // colchon
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(155, 163.5, 80); 
+    glScalef(25, 2, 50); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la colchon
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 1 derecha
+    glTranslatef(143,162.3, 55); 
+    glScalef(1,25, 0.5); 
+    glutSolidCube(1); // Dibujar la pata 1
+    glPopMatrix(); // Fin de la pata 1
+    
+      // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); 
+    glPushMatrix(); 
+    glTranslatef(167, 162.3, 55); 
+    glScalef(1,25, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 2
+    
+    
+    // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 3
+    glTranslatef(143,158.5, 104.5); 
+    glScalef(1,17, 0.5);
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la pata 3
+    
+     // Dibujar las patas de la camilla primer piso
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glPushMatrix(); // Pata 4
+    glTranslatef(167, 158.5, 104.5);
+    glScalef(1,17, 0.5); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //apoyo de almohada camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 169.5, 55); 
+    glScalef(25, 10, 0.1); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+     //sabana de la camilla primer piso
+     glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 164, 80); 
+    glScalef(25, 2, 35); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    //almohada de la camilla primer piso
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); 
+    glTranslatef(155, 167, 58); 
+    glScalef(18, 7, 7); 
+    glutSolidCube(1); 
+    glPopMatrix(); 
+    
+    
+    //comoda camilla 4
+     
+     //comoda1  de camilla
+    glPushMatrix(); 
+    glColor3f(1.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 160.5, 58); 
+    glScalef(27, 20, 11); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     
+     
+     //cajon 1 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 162, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+    
+      //cajon 2 de comoda1
+     glPushMatrix(); 
+    glColor3f(0.0, 1.0, 1.0); // Color blanco
+    glTranslatef(125, 156, 61.5); 
+    glScalef(22, 4, 5); 
+    glutSolidCube(1); 
+    glPopMatrix(); // Fin de la comoda
+     //fin de cajones de comoda 1
+//-----------------------------------------------------------------------------------------------------------------
+
+
+    
+    //-----------------------MAX FIN-------------------------------------------------------------------------
+    
+    
+    
+
+
+
+
+
+
+
     
     
     
