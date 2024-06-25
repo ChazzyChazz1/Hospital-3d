@@ -1440,7 +1440,7 @@ void dibujarPalmera(){
 	
 	//tallo
 	glPushMatrix();
-    glColor3f(0.82, 0.41, 0.12);
+    glColor3f(0.62, 0.41, 0.12);
     glTranslatef(450, -44, 0); 
     glRotatef(-90, 1, 0, 0);                       
     gluCylinder(cilindro, 8, 2, 300, 20, 20); 
@@ -1531,6 +1531,7 @@ void baseCisterna(){
 	glPopMatrix();
 }
 
+//rayas blancas para pista
 void RayaBlanca(){
 	
 	glPushMatrix();
@@ -1545,6 +1546,22 @@ void RayaBlanca(){
 	glEnd();
 	glPopMatrix();
 	
+	
+}
+
+void LineasEstac(){
+	
+	glPushMatrix();
+	glScalef(850, 0.1, 2.5);
+	glTranslatef(-0.5, 1.35, -120);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glVertex3f(0, 0, 0); 
+	glVertex3f(1, 0, 0); 
+	glVertex3f(1, 0, 1); 
+	glVertex3f(0, 0, 1); 
+	glEnd();
+	glPopMatrix();
 	
 }
 
@@ -3292,6 +3309,12 @@ glPushMatrix(); //pata 4
     glPushMatrix(); glTranslatef(20, 50, 301); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(100, 50, 301); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(180, 50, 301); DibujarVentana(); glPopMatrix();
+    
+    glPushMatrix(); glTranslatef(-330, 50, -94.5); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 50, -94.5); DibujarVentana(); glPopMatrix();
+
+    glPushMatrix(); glTranslatef(-330, 50, 441); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 50, 441); DibujarVentana(); glPopMatrix();
 
     //piso 3
     glPushMatrix(); glTranslatef(-220, 100, 47); DibujarVentana(); glPopMatrix();
@@ -3300,6 +3323,9 @@ glPushMatrix(); //pata 4
     glPushMatrix(); glTranslatef(20, 100, 47); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(100, 100, 47); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(180, 100, 47); DibujarVentana(); glPopMatrix();
+    
+    glPushMatrix(); glTranslatef(-330, 100, -94.5); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 100, -94.5); DibujarVentana(); glPopMatrix();
 
     glPushMatrix(); glTranslatef(-220, 100, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(-140, 100, 300); DibujarVentana(); glPopMatrix();
@@ -3307,6 +3333,9 @@ glPushMatrix(); //pata 4
     glPushMatrix(); glTranslatef(20, 100, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(100, 100, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(180, 100, 300); DibujarVentana(); glPopMatrix();
+    
+    glPushMatrix(); glTranslatef(-330, 100, 441); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 100, 441); DibujarVentana(); glPopMatrix();
 
     //piso 4
     glPushMatrix(); glTranslatef(-220, 150, 47); DibujarVentana(); glPopMatrix();
@@ -3315,6 +3344,9 @@ glPushMatrix(); //pata 4
     glPushMatrix(); glTranslatef(20, 150, 47); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(100, 150, 47); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(180, 150, 47); DibujarVentana(); glPopMatrix();
+    
+    glPushMatrix(); glTranslatef(-330, 150, -94.5); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 150, -94.5); DibujarVentana(); glPopMatrix();
 
     glPushMatrix(); glTranslatef(-220, 150, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(-140, 150, 300); DibujarVentana(); glPopMatrix();
@@ -3322,6 +3354,9 @@ glPushMatrix(); //pata 4
     glPushMatrix(); glTranslatef(20, 150, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(100, 150, 300); DibujarVentana(); glPopMatrix();
     glPushMatrix(); glTranslatef(180, 150, 300); DibujarVentana(); glPopMatrix();
+    
+    glPushMatrix(); glTranslatef(-330, 150, 441); DibujarVentana(); glPopMatrix();
+    glPushMatrix(); glTranslatef(290, 150, 441); DibujarVentana(); glPopMatrix();
 
     //--------------------ventana fin-------------------------------------------------
 
@@ -3545,6 +3580,41 @@ glPushMatrix(); //pata 4
     glPushMatrix();
     glScaled(61, 1, 270);
     glTranslatef(-5.1, 49, 0.65);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix(); 
+    glScaled(61, 99.6, 1);
+    glTranslatef(-5.1, 1,-92);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 99.6, 1);
+    glTranslatef(5.1, 1, -92);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 99.6, 1);
+    glTranslatef(-5.1, 1, -50);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 99.6, 1);
+    glTranslatef(5.1, 1, 440);
+    glColor3f(0.5, 0.5, 0.5);
+    glutSolidCube(2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(61, 99.6, 1);
+    glTranslatef(-5.1, 1, 440);
     glColor3f(0.5, 0.5, 0.5);
     glutSolidCube(2);
     glPopMatrix();
@@ -5609,23 +5679,61 @@ glPushMatrix(); //pata 4
     
     //-----------------------MAX FIN-------------------------------------------------------------------------
     
+    //--------------DIANA-----------------
     
-    
+    //terreno de estacionamiento
+    glPushMatrix();
+    glScalef(1200, 1, 800);  
+    glTranslatef(-0.5, 0.1, -1.23);  
+    glBegin(GL_POLYGON);
+    glColor3f(0.2, 0.2, 0.2);  
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, 0, 0);
+    glVertex3f(1, 0, 1);
+    glVertex3f(0, 0, 1);
+    glEnd();
+    glPopMatrix();
 
-
-
-
-
-
-
+    //lineas de estacionamiento
+    LineasEstac();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -80);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -100);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -180);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -340);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -420);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -440);
+    LineasEstac();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -520);
+    LineasEstac();
+    glPopMatrix();
     
     
-    
-    
-    
-    
-    
-    //------------------------------- SEGUIR EDITANDO ABAJO------------- 
+    //------------------------------- SEGUIR EDITANDO ------------- 
     
     
     
