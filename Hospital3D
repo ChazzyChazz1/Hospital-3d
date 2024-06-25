@@ -194,6 +194,25 @@ void DibujarCilindro4() { //columna 2 interior
     gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
     glPopMatrix();
 }
+
+void DibujarCilindro5() { //columna 3 interior
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(-130, 0, -130); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                        //COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+
+void DibujarCilindro6() { //columna 4 interior
+    glPushMatrix();
+    glColor3f(0.5, 0.5, 0.5);
+    glTranslatef(130, 0, -130); // Mover el cilindro a la posición deseada
+    glRotatef(-90, 1, 0, 0); // Rotar el cilindro para que esté parado                        //COPIADO
+    gluCylinder(cilindro, 10, 10, 50, 20, 20); // Dibujar un cilindro sólido
+    glPopMatrix();
+}
+
 void DibujarSilla() {
     glPushMatrix(); //espaldar
     glScaled(4, 5, 0.5);
@@ -820,8 +839,6 @@ void car() {
     glPopMatrix();
 }
 //----------------------------carro------------------------------------------------------------------------------------
-
-
 
 void carro() {
 	
@@ -1564,6 +1581,10 @@ void LineasEstac(){
 	glPopMatrix();
 	
 }
+
+
+
+
 
 void mostrar() {
 
@@ -5732,6 +5753,72 @@ glPushMatrix(); //pata 4
     LineasEstac();
     glPopMatrix();
     
+    //DIANA FIN--------------------------------------------
+    
+    
+    //---------------------DANIEL---------------
+    // Dibujar la pista de aterrizaje (helipuerto) en el techo
+    glPushMatrix();
+glTranslatef(0.0, 50.0, 0.0); // Mover la pista de aterrizaje al techo
+glScalef(30.0, 1.0, 30.0); // Escalar la pista para que sea más grande
+glColor3f(0.3, 0.3, 0.3); // Color gris para la pista
+glutSolidCube(1.0); // Dibujar un cubo sólido como pista
+glPopMatrix();
+
+// Dibujar las letras "HOSPITAL" en la fachada
+glPushMatrix();
+glTranslatef(110, 200, 48); // Posición de las letras "HOSPITAL" en la fachada
+glRotatef(180, 0, 1, 0);
+glScalef(0.4, 0.5, 1.1); // Escalar las letras
+glColor3f(1.0, 0.0, 0.0); // Color rojo para las letras
+const char* hospital = "HOSPITAL";
+for (const char* p = hospital; *p != '\0'; ++p) {
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, *p); // Dibujar cada letra
+}
+glPopMatrix();
+
+// Dibujar las letras "EMERGENCIAS" en la fachada
+glPushMatrix();
+glTranslatef(-150, 200, 300); // Posición de las letras "EMERGENCIAS" en la fachada
+glScalef(0.4, 0.5, 1.1); // Escalar las letras
+glColor3f(0.0, 0.0, 1.0); // Color azul para las letras
+const char* emergencias = "EMERGENCIA";
+for (const char* p = emergencias; *p != '\0'; ++p) {
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, *p); // Dibujar cada letra
+}
+glPopMatrix();
+
+
+    
+    // Actualizar ángulo del ventilador
+    if (ventiladorEncendido) {
+        fanAngle += rotationSpeed;
+        if (fanAngle >= 360.0f) {
+            fanAngle -= 360.0f;
+        }
+    }
+
+    // Dibujar ventilador
+    glPushMatrix();
+    glTranslatef(0.0, 50.0, 0.0); // Mover el ventilador al techo
+    glRotatef(fanAngle, 0.0, 1.0, 0.0); // Rotar el ventilador
+    glColor3f(0.0, 0.0, 0.0); // Color negro para el ventilador
+    glBegin(GL_TRIANGLES);
+    for (int i = 0; i < 4; ++i) {
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(1.0, 0.0, 0.2);
+        glVertex3f(1.0, 0.0, -0.2);
+        glRotatef(90.0, 0.0, 1.0, 0.0);
+    }
+    glEnd();
+    glPopMatrix();
+
+    // Configurar iluminación
+    if (bombillaEncendida) {
+        configurarIluminacionBombilla(); // Configurar la iluminación de la bombilla
+    }
+
+    //-------------Daniel-------------
     
     //------------------------------- SEGUIR EDITANDO ------------- 
     
@@ -5740,6 +5827,9 @@ glPushMatrix(); //pata 4
     glFlush();
     glutSwapBuffers();
 }
+
+
+
 
 void cambiarTamanio(int w, int h) {
     glViewport(0, 0, w, h);
