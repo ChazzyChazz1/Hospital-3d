@@ -480,7 +480,7 @@ void DibujarAmbulancia2() {
 void car() {
 	
 	glPushMatrix(); 
-	glTranslatef(50, 1.5, -135);
+	glTranslatef(50, 1.5, -169);
 	glRotatef(-90, 0, 1, 0);
 	glScalef(3, 3, 3);
 	
@@ -844,7 +844,7 @@ void carro() {
 	
 	glPushMatrix(); 
 	glTranslatef(300, 1.5, -135);
-	glRotatef(-90, 0, 1, 0);
+	glRotatef(90, 0, 1, 0);
 	glScalef(3, 3, 3);
 	
 	GLfloat frontBody[14][3] = {
@@ -1159,9 +1159,10 @@ void carro() {
 		{1.2,4.2,-10.5},
 		{2.6,4.2,-10.5},
 	};
+	//luces traseras del carro
 	glBegin(GL_QUADS);
 	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
-		glColor3f(0.0f, 1.0f, 0.0f);
+		glColor3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
 	}
 	glEnd();
@@ -1582,6 +1583,20 @@ void LineasEstac(){
 	
 }
 
+void LineasEstac1(){
+	
+	glPushMatrix();
+	glScalef(2.5, 0.1, 82);
+	glTranslatef(170, 1.4, -4.63);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glVertex3f(0, 0, 0); 
+	glVertex3f(1, 0, 0); 
+	glVertex3f(1, 0, 1); 
+	glVertex3f(0, 0, 1); 
+	glEnd();
+	glPopMatrix();
+}
 
 
 
@@ -1612,7 +1627,6 @@ void mostrar() {
     carro();
 DibujarAmbulancia2();
   
-    
     
     
     //drawSquare(0.5, 0.5, 0.5); // Dibuja un cuadrado gris por defecto
@@ -5097,7 +5111,6 @@ glPushMatrix(); //pata 4
      
      
      
-       //sndaISDBashdbahksdbkadbkjnasbdasbdas
      //camillas tercer piso-----------------------------------------------------
      
              //inicio segundo piso camilla 1
@@ -5753,15 +5766,379 @@ glPushMatrix(); //pata 4
     LineasEstac();
     glPopMatrix();
     
+    //lineas verticales del estacionamiento
+    LineasEstac1();
+    
+    glPushMatrix();
+    glTranslatef(-50, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-100, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-150, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-200, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-250, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-300, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-350, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-400, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-450, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-500, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-550, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-600, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-650, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-700, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-750, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-800, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-850, 0, 0);
+    LineasEstac1();
+    glPopMatrix();
+    
+    // segunda fila
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-50, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-100, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-150, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-200, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-250, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-300, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-350, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-400, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-450, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-500, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-550, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-600, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-650, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-700, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-750, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-800, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-850, 0, -100);
+    LineasEstac1();
+    glPopMatrix();
+    
+    //tercera fila
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-50, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-100, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-150, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-200, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-250, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-300, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-350, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-400, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-450, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-500, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-550, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-600, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-650, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-700, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-750, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-800, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-850, 0, -340);
+    LineasEstac1();
+    glPopMatrix();
+    
+    //cuarta fila
+    
+    glPushMatrix();
+    glTranslatef(0, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-50, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-100, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-150, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-200, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-250, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-300, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-350, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-400, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-450, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-500, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-550, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-600, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-650, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-700, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-750, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-800, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-850, 0, -440);
+    LineasEstac1();
+    glPopMatrix();
+    
     //DIANA FIN--------------------------------------------
     
     
     //---------------------DANIEL---------------
     // Dibujar la pista de aterrizaje (helipuerto) en el techo
     glPushMatrix();
-glTranslatef(0.0, 50.0, 0.0); // Mover la pista de aterrizaje al techo
+glTranslatef(0.0, 70.0, 0.0); // Mover la pista de aterrizaje al techo
 glScalef(30.0, 1.0, 30.0); // Escalar la pista para que sea más grande
-glColor3f(0.3, 0.3, 0.3); // Color gris para la pista
+glColor3f(0.3, 0.3, 1); // Color gris para la pista
 glutSolidCube(1.0); // Dibujar un cubo sólido como pista
 glPopMatrix();
 
@@ -5800,25 +6177,32 @@ glPopMatrix();
 
     // Dibujar ventilador
     glPushMatrix();
-    glTranslatef(0.0, 50.0, 0.0); // Mover el ventilador al techo
+    glTranslatef(0.0, 90.0, 0.0); // Mover el ventilador al techo
     glRotatef(fanAngle, 0.0, 1.0, 0.0); // Rotar el ventilador
     glColor3f(0.0, 0.0, 0.0); // Color negro para el ventilador
     glBegin(GL_TRIANGLES);
     for (int i = 0; i < 4; ++i) {
+    	glRotatef(45.0, 0.0, 1.0, 0.0);
         glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(1.0, 0.0, 0.2);
-        glVertex3f(1.0, 0.0, -0.2);
-        glRotatef(90.0, 0.0, 1.0, 0.0);
+        glVertex3f(10.0, 0.0, 2);
+        glVertex3f(10.0, 0.0, -2);
     }
     glEnd();
     glPopMatrix();
 
     // Configurar iluminación
-    if (bombillaEncendida) {
-        configurarIluminacionBombilla(); // Configurar la iluminación de la bombilla
-    }
+//    if (bombillaEncendida) {
+//        configurarIluminacionBombilla(); // Configurar la iluminación de la bombilla
+//        
+//        
+//    }
 
     //-------------Daniel-------------
+    
+    
+    
+    
+    
     
     //------------------------------- SEGUIR EDITANDO ------------- 
     
