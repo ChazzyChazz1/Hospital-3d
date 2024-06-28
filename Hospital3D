@@ -477,7 +477,7 @@ void DibujarAmbulancia2() {
     glutSolidSphere(2, 20, 20); // Dibujar la luz derecha                                        //COPIADO
     glPopMatrix(); // Fin de las luces
 }
-void car() {
+void carroAmarillo() {
 	
 	glPushMatrix(); 
 	glTranslatef(50, 1.5, -169);
@@ -840,7 +840,7 @@ void car() {
 }
 //----------------------------carro------------------------------------------------------------------------------------
 
-void carro() {
+void carroVerde() {
 	
 	glPushMatrix(); 
 	glTranslatef(300, 1.5, -135);
@@ -1598,8 +1598,1453 @@ void LineasEstac1(){
 	glPopMatrix();
 }
 
+void carroBlanco() {
+	
+	glPushMatrix(); 
+	glTranslatef(300, 1.5, -470);
+	glRotatef(0, 0, 0, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	//luces traseras del carro
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
 
 
+    glPopMatrix();
+}
+
+void carroNegro() {
+	
+	glPushMatrix(); 
+	glTranslatef(100, 1.5, -470);
+	glRotatef(0, 0, 0, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	//luces traseras del carro
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+
+
+    glPopMatrix();
+}
+
+void carroVinotinto() {
+	
+	glPushMatrix(); 
+	glTranslatef(-200, 1.5, -470);
+	glRotatef(0, 0, 0, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.5f, 0.0f, 0.25f);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(0.5f, 0.0f, 0.25f);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	//luces traseras del carro
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+
+
+    glPopMatrix();
+}
+
+void carroAzul() {
+	
+	glPushMatrix(); 
+	glTranslatef(-50, 1.5, -470);
+	glRotatef(0, 0, 0, 0);
+	glScalef(3, 3, 3);
+	
+	GLfloat frontBody[14][3] = {
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+		{2.8,3.5,10.5},
+		{3.0,4.0,8.0},
+		{0.0,3.5,10.7},
+		{0.0,4.0,8.0},
+		{-2.8,3.5,10.5},
+		{-3.0,4.0,8.0},
+		{-2.8,1.0,10.5},
+		{-3.0,1.0,8.0},
+		{0.0,1.1,10.7},
+		{0.0,1.1,8.0},
+		{2.8,1.0,10.5},
+		{3.0,1.0,8.0},
+
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(frontBody)/sizeof(frontBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(frontBody[i][0],frontBody[i][1],frontBody[i][2]+movement);
+	}
+	glEnd();
+	//Parte delantera del automóvil
+	GLfloat grill[6][3] = {
+		{2.8,1.0,10.5},
+		{2.8,3.5,10.5},
+		{0.0,1.1,10.7},
+		{0.0,3.5,10.7},
+		{-2.8,1.0,10.5},
+		{-2.8,3.5,10.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(grill)/sizeof(grill[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(grill[i][0],grill[i][1],grill[i][2]+movement);
+	}
+	glEnd();
+	//Parte trasera del automóvil
+	GLfloat frontLight[8][3] = {
+		{2.6,3.2,10.55},
+		{1.6,3.2,10.6},
+		{1.6,2.7,10.6},
+		{2.6,2.7,10.55},
+		{-2.6,3.2,10.55},
+		{-1.6,3.2,10.6},
+		{-1.6,2.7,10.6},
+		{-2.6,2.7,10.55},
+
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontLight)/sizeof(frontLight[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(frontLight[i][0],frontLight[i][1],frontLight[i][2]+movement);
+	}
+	glEnd();
+	//tapa delantera del motor
+	GLfloat hood[4][3] = {
+		{3.0,4.0,8.0},
+		{3.0,4.0,4.0},
+		{-3.0,4.0,4.0},
+		{-3.0,4.0,8.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(hood)/sizeof(hood[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(hood[i][0],hood[i][1],hood[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera izquierda
+	GLfloat leftTirePanel[7][3] = {
+		{-3.0,1.0,8.0},
+		{-3.0,4.0,8.0},
+		{-3.0,2.5,7.0},
+		{-3.0,4.0,6.0},
+		{-3.0,2.5,5.0},
+		{-3.0,4.0,4.0},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(leftTirePanel)/sizeof(leftTirePanel[0]); i++) {
+		glVertex3f(leftTirePanel[i][0],leftTirePanel[i][1],leftTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//panel de auto sobre la rueda delantera derecha
+	GLfloat rightTirePanel[7][3] = {
+		{3.0,1.0,8.0},
+		{3.0,4.0,8.0},
+		{3.0,2.5,7.0},
+		{3.0,4.0,6.0},
+		{3.0,2.5,5.0},
+		{3.0,4.0,4.0},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_STRIP);
+	for(int i = 0; i< sizeof(rightTirePanel)/sizeof(rightTirePanel[0]); i++) {
+		glVertex3f(rightTirePanel[i][0],rightTirePanel[i][1],rightTirePanel[i][2]+movement);
+	}
+	glEnd();
+	// marco de la ventana delantera
+	GLfloat frontGlassRim[4][3] = {
+		{-3.0,4.0,4.0},
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{-3.0,6.0,1.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(frontGlassRim)/sizeof(frontGlassRim[0]); i++) {
+		glVertex3f(frontGlassRim[i][0],frontGlassRim[i][1],frontGlassRim[i][2]+movement);
+	}
+	glEnd();
+	// parabrisas
+	GLfloat frontGlass[4][3] = {
+		{-2.8,4.0,4.08},
+		{2.8,4.0,4.08},
+		{2.8,5.9,1.14},
+		{-2.8,5.9,1.14},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(frontGlass)/sizeof(frontGlass[0]); i++) {
+		glVertex3f(frontGlass[i][0],frontGlass[i][1],frontGlass[i][2]+movement);
+	}
+	glEnd();
+	//techo de automóvil
+	GLfloat roof[4][3] = {
+		{-3.0,6.0,1.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{-3.0,6.0,-3.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.0f, 0.0f, 0.5f);
+	for(int i = 0; i< sizeof(roof)/sizeof(roof[0]); i++) {
+		glVertex3f(roof[i][0],roof[i][1],roof[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado izquierdo
+	GLfloat leftBody[8][3] = {
+		{-3.0,4.0,4.0},
+		{-3.0,6.0,1.0},
+		{-3.0,6.0,-3.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,1.0,-4.0},
+		{-3.0,1.0,1.5},
+		{-3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(leftBody)/sizeof(leftBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(leftBody[i][0],leftBody[i][1],leftBody[i][2]+movement);
+	}
+	glEnd();
+	//puerta del lado derecho
+	GLfloat rightBody[8][3] = {
+		{3.0,4.0,4.0},
+		{3.0,6.0,1.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{3.0,2.5,-5.0},
+		{3.0,1.0,-4.0},
+		{3.0,1.0,1.5},
+		{3.0,1.0,4.0},
+	};
+	glBegin(GL_TRIANGLE_FAN);
+	for(int i = 0; i< sizeof(rightBody)/sizeof(rightBody[0]); i++) {
+		glVertex3f(rightBody[i][0],rightBody[i][1],rightBody[i][2]+movement);
+	}
+	glEnd();
+	//parte inferior del automóvil
+	GLfloat bottom[4][3] = {
+		{-3.0,1.0,4.0},
+		{3.0,1.0,4.0},
+		{3.0,1.0,-4.0},
+		{-3.0,1.0,-4.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bottom)/sizeof(bottom[0]); i++) {
+		glVertex3f(bottom[i][0],bottom[i][1],bottom[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera izquierda
+	GLfloat rightGlassOne[4][3] = {
+		{-3.1,4.0,3.5},
+		{-3.1,5.8,0.8},
+		{-3.1,5.8,-0.8},
+		{-3.1,4.0,-0.8},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(rightGlassOne)/sizeof(rightGlassOne[0]); i++) {
+		glVertex3f(rightGlassOne[i][0],rightGlassOne[i][1],rightGlassOne[i][2]+movement);
+	}
+	glEnd();
+	// ventana delantera derecha
+	GLfloat leftGlassOne[4][3] = {
+		{3.1,4.0,3.5},
+		{3.1,5.8,0.8},
+		{3.1,5.8,-1.0},
+		{3.1,4.0,-1.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(leftGlassOne)/sizeof(leftGlassOne[0]); i++) {
+		glVertex3f(leftGlassOne[i][0],leftGlassOne[i][1],leftGlassOne[i][2]+movement);
+	}
+	glEnd();
+	GLfloat handle[8][3] = {
+		{3.1,3.5,0.0},
+		{3.1,3.5,0.8},
+		{3.1,3.2,0.8},
+		{3.1,3.2,0.0},
+
+		{-3.1,3.5,0.0},
+		{-3.1,3.5,0.8},
+		{-3.1,3.2,0.8},
+		{-3.1,3.2,0.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(handle)/sizeof(handle[0]); i++) {
+		glVertex3f(handle[i][0],handle[i][1],handle[i][2]+movement);
+	}
+	glEnd();
+	// ventana trasera
+	GLfloat backGlass[7][3] = {
+		{-2.8,5.9,-3.3},
+		{2.8,5.9,-3.3},
+		{2.8,4.5,-5.0},
+		{-2.8,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(int i = 0; i< sizeof(backGlass)/sizeof(backGlass[0]); i++) {
+		glVertex3f(backGlass[i][0],backGlass[i][1],backGlass[i][2]+movement);
+	}
+	glEnd();
+	//marco de la ventana trasera
+	GLfloat backGlassRim[4][3] = {
+		{-3.0,6.0,-3.0},
+		{3.0,6.0,-3.0},
+		{3.0,4.5,-5.0},
+		{-3.0,4.5,-5.0},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backGlassRim)/sizeof(backGlassRim[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(backGlassRim[i][0],backGlassRim[i][1],backGlassRim[i][2]+movement);
+	}
+	glEnd();
+	//panel sobre la rueda trasera
+	GLfloat backTirePanel[10][3] = {
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+		{3.0,4.5,-5.0},
+		{3.0,4.0,-7.0},
+		{-3.0,4.5,-5.0},
+		{-3.0,4.0,-7.0},
+		{-3.0,2.5,-5.0},
+		{-3.0,2.5,-7.5},
+		{3.0,2.5,-5.0},
+		{3.0,2.5,-7.5},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backTirePanel)/sizeof(backTirePanel[0]); i++) {
+		glVertex3f(backTirePanel[i][0],backTirePanel[i][1],backTirePanel[i][2]+movement);
+	}
+	glEnd();
+	//parte trasera
+	GLfloat backBody[10][3] = {
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.0,-7.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.0,-7.0},
+		{-3.0,4.5,-10.5},
+		{-3.0,1.0,-8.0},
+		{-3.0,1.5,-10.0},
+		{3.0,1.0,-8.0},
+		{3.0,1.5,-10.0},
+	};
+	glBegin(GL_QUAD_STRIP);
+	for(int i = 0; i< sizeof(backBody)/sizeof(backBody[0]); i++) {
+		glColor3f(0.0f, 0.0f, 0.5f);
+		glVertex3f(backBody[i][0],backBody[i][1],backBody[i][2]+movement);
+	}
+	glEnd();
+	//parachoques trasero
+	GLfloat bumper[10][3] = {
+		{-3.0,1.5,-10.0},
+		{3.0,1.5,-10.0},
+		{3.0,4.5,-10.5},
+		{-3.0,4.5,-10.5},
+	};
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(bumper)/sizeof(bumper[0]); i++) {
+		glColor3f(0.1f, 0.1f, 0.1f);
+		glVertex3f(bumper[i][0],bumper[i][1],bumper[i][2]+movement);
+	}
+	glEnd();
+	GLfloat backLight[10][3] = {
+		{-2.6,3.5,-10.4},
+		{-1.2,3.5,-10.4},
+		{-1.2,4.2,-10.5},
+		{-2.6,4.2,-10.5},
+
+		{2.6,3.5,-10.4},
+		{1.2,3.5,-10.4},
+		{1.2,4.2,-10.5},
+		{2.6,4.2,-10.5},
+	};
+	//luces traseras del carro
+	glBegin(GL_QUADS);
+	for(int i = 0; i< sizeof(backLight)/sizeof(backLight[0]); i++) {
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(backLight[i][0],backLight[i][1],backLight[i][2]+movement);
+	}
+	glEnd();
+
+	//llanta
+	glColor3f(0.470, 0.517, 0.529);
+	//neumático delantero derecho
+	glTranslatef(3.0f, 1.0f, 6.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático delantero izquierdo
+	glTranslatef(-6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero izquierdo
+	glTranslatef(0.0f, 0.0f, -12.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+	//neumático trasero derecho
+	glTranslatef(6.0f, 0.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, movement);
+	glRotatef(90,0,1,0);
+	glutSolidTorus(0.75,0.75,10,10);
+	glRotatef(-90,0,1,0);
+	glTranslatef(0.0f, 0.0f, -movement);
+
+
+    glPopMatrix();
+}
 
 void mostrar() {
 
@@ -1611,7 +3056,7 @@ void mostrar() {
     glTranslatef(-posX, -posY, -posZ);
  
     Terreno();
-    car();
+    carroAmarillo();
     dibujarSuelo();
     dibujarTecho();
     DibujarCilindro1();
@@ -1624,8 +3069,8 @@ void mostrar() {
     Pista();
     Floor();
     DibujarBombilla();
-    carro();
-DibujarAmbulancia2();
+    carroVerde();
+    DibujarAmbulancia2();
   
     
     
@@ -6130,8 +7575,63 @@ glPushMatrix(); //pata 4
     LineasEstac1();
     glPopMatrix();
     
+    
+    //Muro de Estacionamiento
+    glPushMatrix();
+    glScalef(1,12,402);
+    glTranslatef( 600,1,-1.45 );
+    glColor3f(0.8,0.8,0.8);
+    glutSolidCube(2);
+    glPopMatrix();
+ 
+    glPushMatrix();
+    glScalef(1,12,402);
+    glTranslatef( -600,1,-1.45 );
+    glColor3f(0.8,0.8,0.8);
+    glutSolidCube(2);
+    glPopMatrix();
+ 
+    
+   	glPushMatrix();
+	glScalef(600,12,1);
+	glTranslatef(0,1,-985);
+	glColor3f(0.8,0.8,0.8);
+	glutSolidCube(2);
+	glPopMatrix();
+    
     //DIANA FIN--------------------------------------------
     
+    
+    // -----Jeffrey inicio--------------
+    
+      carroBlanco(); glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-350, 0, 775);  carroBlanco(); glPopMatrix();
+	  glPushMatrix(); glTranslatef(-300, 0, -340); carroBlanco(); glPopMatrix(); glPushMatrix(); glTranslatef(-150, 0, 0); carroBlanco(); glPopMatrix();
+	  glPushMatrix(); glTranslatef(-600, 0, 0); carroBlanco(); glPopMatrix(); glPushMatrix(); glTranslatef(-400, 0, 0); carroBlanco(); glPopMatrix();
+	  glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(0, 0, 1110);  carroBlanco(); glPopMatrix();
+	  glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-300, 0, 775);  carroBlanco(); glPopMatrix();
+      carroNegro(); glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-450, 0, 775);  carroNegro(); glPopMatrix(); glPushMatrix(); glTranslatef(200, 0, -340); carroNegro(); glPopMatrix();
+      glPushMatrix(); glTranslatef(-250, 0, 0); carroNegro(); glPopMatrix();
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(0, 0, 775);  carroNegro(); glPopMatrix();
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(50, 0, 775);  carroNegro(); glPopMatrix();glPushMatrix(); glTranslatef(300, 0, 0); carroNegro(); glPopMatrix();
+      carroVinotinto(); glPushMatrix(); glTranslatef(400, 0, 0); carroVinotinto(); glPopMatrix(); 
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(250, 0, 775);  carroVinotinto(); glPopMatrix();
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(500, 0, 775);  carroVinotinto(); glPopMatrix();
+      carroAzul(); glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-150, 0, 775);  carroAzul(); glPopMatrix();
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-50, 0, 775);  carroAzul(); glPopMatrix(); 
+      glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-150, 0, 1110);  carroAzul(); glPopMatrix();
+      glPushMatrix(); glRotatef(90, 0, 1, 0); glTranslatef(420, 0, 220); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(-90, 0, 1, 0); glTranslatef(-355, 0, 20); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(-90, 0, 1, 0); glTranslatef(-355, 0, -130); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(-90, 0, 1, 0); glTranslatef(-355, 0, 365); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(-90, 0, 1, 0); glTranslatef(-690, 0, 365); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(90, 0, 1, 0); glTranslatef(760, 0, 220); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(90, 0, 1, 0); glTranslatef(760, 0, 370); carroAmarillo(); glPopMatrix();
+      glPushMatrix(); glRotatef(90, 0, 1, 0); glTranslatef(5, 0, 385); carroVerde(); glPopMatrix();
+      glPushMatrix(); glRotatef(90, 0, 1, 0); glTranslatef(340, 0, 140); carroVerde(); glPopMatrix();
+      
+      
+    
+    //------Jeffrey fin----
     
     //---------------------DANIEL---------------
     // Dibujar la pista de aterrizaje (helipuerto) en el techo
