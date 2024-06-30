@@ -839,7 +839,6 @@ void carroAmarillo() {
     glPopMatrix();
 }
 //----------------------------carro------------------------------------------------------------------------------------
-
 void carroVerde() {
 	
 	glPushMatrix(); 
@@ -1201,9 +1200,6 @@ void carroVerde() {
 
     glPopMatrix();
 }
-
-
-
 //---------------------------------------------------fin carro----------------------------------------------
 void Terreno (){
 	
@@ -1216,7 +1212,6 @@ void Terreno (){
     glVertex3f(1000.0, -0.8, -1000.0);
     glEnd();
 }
-
 
 void Floor (){
 	
@@ -1450,7 +1445,6 @@ void drawFan() {
     glPopMatrix();
     
 }
-
 
 // MONZON ROJAS JEFFREY (parte 4)
 
@@ -3241,14 +3235,14 @@ void mostrar() {
     glPushMatrix(); //libro 2
     glScaled(5, 4, 0.5);
     glTranslatef(-13, 3.5, -56);
-    glColor3f(1, 0, 0);
+    glColor3f(1, 1, 0);
     glutSolidCube(2);
     glPopMatrix();
 
     glPushMatrix(); //libro 2
     glScaled(5, 4, 0.5);
-    glTranslatef(-13, 3.5, -58);
-    glColor3f(1, 0, 0);
+    glTranslatef(-13, 3.5, -60);
+    glColor3f(0, 0, 0);
     glutSolidCube(2);
     glPopMatrix();
 
@@ -3645,10 +3639,38 @@ glPushMatrix(); //pata 4
     glColor3f(1, 1, 1);
     glutSolidCube(2);
     glPopMatrix();
+    glPushMatrix();  //puerta barra
+    glTranslatef(-164, 38, 49);
+    glScaled(25, 1, 1);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();  //puerta barra
+    glTranslatef(-140, 18.8, 50);
+    glScaled(1, 19.5, 1);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
+    glPushMatrix();  //puerta barra
+    glTranslatef(-188, 18.8, 50);
+    glScaled(1, 19.5, 1);
+    glColor3f(1, 1, 1);
+    glutSolidCube(2);
+    glPopMatrix();
 
 
     glPushMatrix(); //puerta interior Recepcion
-	glTranslatef(-20, -1, 49);
+	glTranslatef(-20, -1, 48.9999);
+	glBegin(GL_POLYGON);
+	glColor3f(0.8157, 0.9882, 0.9882);
+	glVertex2f(1, 40); 
+	glVertex2f(25, 40); 
+	glVertex2f(25, 1); 
+	glVertex2f(1, 1); 
+	glEnd();
+	glPopMatrix();
+	glPushMatrix(); //puerta interior Recepcion
+	glTranslatef(-20, -1, 52.1);
 	glBegin(GL_POLYGON);
 	glColor3f(0.8157, 0.9882, 0.9882);
 	glVertex2f(1, 40); 
@@ -7603,7 +7625,7 @@ glPushMatrix(); //pata 4
     
     
     // -----Jeffrey inicio--------------
-    
+    //Carros
       carroBlanco(); glPushMatrix(); glRotatef(180, 0, 1, 0); glTranslatef(-350, 0, 775);  carroBlanco(); glPopMatrix();
 	  glPushMatrix(); glTranslatef(-300, 0, -340); carroBlanco(); glPopMatrix(); glPushMatrix(); glTranslatef(-150, 0, 0); carroBlanco(); glPopMatrix();
 	  glPushMatrix(); glTranslatef(-600, 0, 0); carroBlanco(); glPopMatrix(); glPushMatrix(); glTranslatef(-400, 0, 0); carroBlanco(); glPopMatrix();
